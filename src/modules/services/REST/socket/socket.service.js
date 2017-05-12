@@ -2,7 +2,7 @@ import * as io from 'socket.io-client';
 
 import { Observable, Subscribable } from 'rxjs/Observable';
 
-import {CookiesService} from './../cookies/cookies.service';
+import {CookiesService} from '../../cookies/cookies.service';
 
 import * as SocketStatusActions from './../../../redux/website/actions/socketStatus-actions';
 

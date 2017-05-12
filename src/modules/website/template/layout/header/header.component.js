@@ -8,8 +8,6 @@ import {HeaderNavigationAuthenticated} from './header-navigation-authenticated.c
 import {HeaderNavigationNotAuthenticated} from './header-navigation-not-authenticated.component';
 import {HeaderBarSocketStatus} from './header-bar-socket-status.component'
 
-import {isLoggedIn} from '../../../../redux/website/functions/userAuthenticated-functions';
-
 import {
   SidebarBtn,
   Navbar,
@@ -66,7 +64,7 @@ export default class Header extends React.Component {
                 </Col>
                 <Col xs={3} sm={8} collapseRight className='text-right'>
 
-                    { isLoggedIn(this.props.userAuthenticated) ? ::this.renderNavigationAuthenticated() : ::this.renderNavigationNotAuthenticated() }
+                    { this.props.userAuthenticated.user.isLoggedIn() ? ::this.renderNavigationAuthenticated() : ::this.renderNavigationNotAuthenticated() }
 
                 </Col>
 

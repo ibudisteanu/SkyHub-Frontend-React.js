@@ -49,12 +49,6 @@ export class HeaderNavigationNotAuthenticated extends React.Component {
         this.authenticationModal.openRegistration();
     }
 
-    handleLogout(e) {
-        e.preventDefault(); e.stopPropagation();
-        this.props.dispatch(UserAuthenticatedActions.logoutUserAuthenticated());
-    }
-
-
     render() {
         return (
             <Nav pullRight>

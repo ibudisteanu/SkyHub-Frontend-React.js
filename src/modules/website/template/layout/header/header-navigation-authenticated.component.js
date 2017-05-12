@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
-
+import { AuthService } from '../../../../services/REST/authentication/auth.service';
 
 
 import l20n, { Entity } from '@sketchpixy/rubix/lib/L20n';
@@ -599,13 +599,13 @@ class RssMenu extends React.Component {
 )
 export class HeaderNavigationAuthenticated extends React.Component {
 
+    AuthService = null;
+
     constructor(props){
 
         super(props);
 
-        //console.log(props);
-        console.log('Redux Stare'); console.log(props.userAuthenticated);
-        console.log(isLoggedIn(props.userAuthenticated));
+        this.AuthService = new AuthService(props.dispatch);
     }
 
     handleSkinSwitch(e) {
@@ -620,6 +620,12 @@ export class HeaderNavigationAuthenticated extends React.Component {
                 ReactDOM.unmountComponentAtNode(vexContent.get(0));
             }
         });
+    }
+
+    handleLogout(e) {
+        e.preventDefault(); e.stopPropagation();
+
+        this.AuthService.logout();
     }
 
 

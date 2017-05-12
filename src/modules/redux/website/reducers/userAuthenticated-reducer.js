@@ -1,10 +1,7 @@
+import {User} from './../models/User.model';
+
 export const defaultUserState = {
-    user:{
-        id : null,
-        loggedIn : false,
-        firstName : '',
-        lastName : '',
-    },
+    user: new User(),
     error : '',
 };
 
@@ -26,10 +23,7 @@ export function userReducer  ( state = defaultUserState, action)  {
 
         case 'LOGOUT_USER':
 
-            newState = {
-                user: defaultUserState,
-                error: '',
-            };
+            newState = defaultUserState;
 
             break;
     }

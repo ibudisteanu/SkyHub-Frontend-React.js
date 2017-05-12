@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
 
@@ -11,26 +12,28 @@ import {
     Icon,
     Grid,
     Form,
-    Badge,
     Panel,
     Button,
     PanelBody,
     FormGroup,
-    LoremIpsum,
     InputGroup,
     FormControl,
-    ButtonGroup,
-    ButtonToolbar,
     PanelContainer,
 } from '@sketchpixy/rubix';
 
 @withRouter
+@connect(
+    state => ({
+        userAuthenticated : state.userAuthenticated,
+    }),
+    dispatch => ({dispatch}),
+)
 export class RegistrationForm extends React.Component {
 
     constructor(props){
         super(props);
 
-        this.SocketService = new SocketService();
+        this.SocketService = new SocketService(props.dispatch);
     }
 
     back(e) {

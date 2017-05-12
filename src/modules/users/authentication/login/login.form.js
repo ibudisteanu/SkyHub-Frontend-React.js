@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
 import { SocketService } from '../../../services/REST/socket/socket.service';
+import { AuthService } from '../../../services/REST/authentication/auth.service';
 
 import {
     Row,
@@ -30,15 +31,19 @@ import {
 )
 export class LoginForm extends React.Component {
 
+    sPassword = '';
+    sUserEmail = '';
+
     constructor(props) {
         super(props);
 
-        this.SocketService = new SocketService(props.dispatch);
+        // this.SocketService = new SocketService(props.dispatch);
+        this.AuthService = new AuthService(props.dispatch);
     }
 
     back(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
+
         this.props.router.goBack();
     }
 
@@ -48,6 +53,15 @@ export class LoginForm extends React.Component {
 
     componentWillUnmount() {
         $('html').removeClass('authentication');
+    }
+
+    handleCheckLogin(){
+
+        console.log(this.props.sPassword);
+        console.log(this.props.sUserEmail);
+
+ //       this.AuthService.loginAsync(this.props.sUserEmail, this.props.sPassword);
+
     }
 
     render() {
@@ -75,7 +89,7 @@ export class LoginForm extends React.Component {
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-mail' />
                                             </InputGroup.Addon>
-                                            <FormControl autoFocus type='email' className='border-focus-blue' placeholder='username   or    email' />
+                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='username   or    email'  />
                                         </InputGroup>
                                     </FormGroup>
                                     <FormGroup controlId='password'>
@@ -97,7 +111,7 @@ export class LoginForm extends React.Component {
 
                                                 </Col>
                                                 <Col xs={6} collapseLeft collapseRight className='text-right'>
-                                                    <Button lg type='submit' bsStyle='primary' onClick={::this.back}>Login</Button>
+                                                    <Button lg type='submit' bsStyle='primary' onClick={::this.handleCheckLogin}>Login</Button>
                                                 </Col>
                                             </Row>
                                         </Grid>

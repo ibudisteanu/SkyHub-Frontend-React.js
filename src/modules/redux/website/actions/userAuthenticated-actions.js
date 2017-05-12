@@ -10,3 +10,4 @@ export function logoutUserAuthenticated() {
         type: "LOGOUT_USER"
     }
 }
+
