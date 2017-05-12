@@ -1,3 +1,8 @@
+/**
+ * Created by Alexandru Ionut Budisteanu - SkyHub on ${DATE}.
+ * (C) BIT TECHNOLOGIES
+ */
+
 import React from 'react';
 import {connect} from "react-redux";
 import ReactDOM from 'react-dom';
@@ -6,9 +11,8 @@ import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
-import {isLoggedIn} from '../../../../redux/website/functions/userAuthenticated-functions';
-import * as UserAuthenticatedActions from '../../../../redux/website/actions/userAuthenticated-actions.js';
-import {AuthenticationModal} from "./../../../../users/authentication/modals/authentication.modal";
+
+
 
 import l20n, { Entity } from '@sketchpixy/rubix/lib/L20n';
 
@@ -593,7 +597,7 @@ class RssMenu extends React.Component {
     }),
     dispatch => ({dispatch}),
 )
-export class HeaderNavigation extends React.Component {
+export class HeaderNavigationAuthenticated extends React.Component {
 
     constructor(props){
 
@@ -618,31 +622,12 @@ export class HeaderNavigation extends React.Component {
         });
     }
 
-    handleSignIn(e){
-        e.preventDefault(); e.stopPropagation();
-        this.authenticationModal.openLogin();
 
-        // console.log('Redux Stare'); console.log(this.props.userAuthenticated);
-        // this.props.dispatch(UserAuthenticatedActions.newUserAuthenticated({
-        //     firstName : "IOnut",
-        //     lastName : "Alexandru",
-        // }));
-    }
-
-    handleRegister(e){
-        e.preventDefault(); e.stopPropagation();
-        this.authenticationModal.openRegistration();
-    }
-
-    handleLogout(e) {
-
-
-        this.props.dispatch(UserAuthenticatedActions.logoutUserAuthenticated());
-    }
-
-    renderAuthenticatedHeader (){
+    render() {
         return (
-            <div>
+            <Nav pullRight>
+
+
                 <Nav className='hidden-xs'>
                     <NavItem divider />
                     <NavItem eventKey={1} href='#' className='hidden-sm' onClick={::this.handleSkinSwitch}>
@@ -663,34 +648,7 @@ export class HeaderNavigation extends React.Component {
                         <Icon bundle='fontello' glyph='off-1' />
                     </NavItem>
                 </Nav>
-            </div>
-        );
-    }
 
-    renderHeader (){
-        return (
-            <div>
-                <AuthenticationModal ref={(c) => this.authenticationModal = c} />
-
-                <Nav>
-                    <NavItem onClick={::this.handleSignIn}>
-                        Login
-                    </NavItem>
-
-                    <NavItem onClick={::this.handleRegister}>
-                        Register
-                    </NavItem>
-
-                </Nav>
-            </div>
-        );
-    }
-
-    render() {
-        return (
-            <Nav pullRight>
-
-                { isLoggedIn(this.props.userAuthenticated) ? ::this.renderAuthenticatedHeader() : ::this.renderHeader() }
 
             </Nav>
         );

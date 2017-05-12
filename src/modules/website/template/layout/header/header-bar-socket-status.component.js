@@ -1,3 +1,8 @@
+/**
+ * Created by Alexandru Ionut Budisteanu - SkyHub on ${DATE}.
+ * (C) BIT TECHNOLOGIES
+ */
+
 import React from 'react';
 import {connect} from "react-redux";
 import { Link, withRouter } from 'react-router';
@@ -18,7 +23,7 @@ import {
     }),
     dispatch => ({dispatch}),
 )
-export class SocketStatusHeaderBar extends React.Component {
+export class HeaderBarSocketStatus extends React.Component {
 
     sBackgroundColor = 'yellow';
     sTextColor = 'black';

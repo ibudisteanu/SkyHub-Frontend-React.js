@@ -4,8 +4,11 @@ import { Link, withRouter } from 'react-router';
 
 import l20n, { Entity } from '@sketchpixy/rubix/lib/L20n';
 
-import {HeaderNavigation} from './header-menus.component';
-import {SocketStatusHeaderBar} from './socket-status-header-bar.component'
+import {HeaderNavigationAuthenticated} from './header-navigation-authenticated.component';
+import {HeaderNavigationNotAuthenticated} from './header-navigation-not-authenticated.component';
+import {HeaderBarSocketStatus} from './header-bar-socket-status.component'
+
+import {isLoggedIn} from '../../../../redux/website/functions/userAuthenticated-functions';
 
 import {
   SidebarBtn,
@@ -33,7 +36,21 @@ class Brand extends React.Component {
 @connect(state => ({
     userAuthenticated : state.userAuthenticated,
 }))
+
 export default class Header extends React.Component {
+
+  renderNavigationAuthenticated(){
+    return (
+        <HeaderNavigationAuthenticated/>
+    );
+  }
+
+  renderNavigationNotAuthenticated(){
+      return (
+          <HeaderNavigationNotAuthenticated/>
+      );
+  }
+
   render() {
     return (
       <Grid id='navbar' {...this.props}>
@@ -48,10 +65,12 @@ export default class Header extends React.Component {
                   <Brand />
                 </Col>
                 <Col xs={3} sm={8} collapseRight className='text-right'>
-                  <HeaderNavigation />
+
+                    { isLoggedIn(this.props.userAuthenticated) ? ::this.renderNavigationAuthenticated() : ::this.renderNavigationNotAuthenticated() }
+
                 </Col>
 
-                <SocketStatusHeaderBar />
+                <HeaderBarSocketStatus />
 
               </Row>
             </Navbar>
