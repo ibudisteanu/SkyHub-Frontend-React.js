@@ -9,7 +9,7 @@ export class CookiesService {
     }
 
     static readCookie(cookieName) {
-        var theCookie=" "+document.cookie;
+        var theCookie=" "+window.document.cookie;
         var ind=theCookie.indexOf(" "+cookieName+"=");
         if (ind==-1) ind=theCookie.indexOf(";"+cookieName+"=");
         if (ind==-1 || cookieName=="") return "";
@@ -19,20 +19,23 @@ export class CookiesService {
     }
 
     static readCookie2(a) {
-        var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+        var b = window.document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
         return b ? b.pop() : '';
     }
 
     static deleteCookie(name) {
+        console.log('deleting cookie');
         this.setCookie(name, '', -1);
     }
 
-    static setCookie(name: string, value: string, expireDays: number, path: string = '') {
-        let d:Date = new Date();
-        d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
-        let expires:string = `expires=${d.toUTCString()}`;
-        let cpath:string = path ? `; path=${path}` : '';
-        document.cookie = `${name}=${value}; ${expires}${cpath}`;
+    static setCookie(name , value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
     }
 
 }

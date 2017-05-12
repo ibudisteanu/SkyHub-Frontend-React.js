@@ -32,14 +32,23 @@ export class SocketService {
             //this.sServerSocketAddress = this.config.Socket_Server
             //this.sServerSocketApi = this.config.Socket_Server_API
 
-            this.createClientSocket();
+            this.createClientSocketDocumentReady();
         }
 
         return socketServiceInstance;
 
     }
 
+
+    createClientSocketDocumentReady (){
+        this.createClientSocketInterval = setInterval(::this.createClientSocket,500);
+        this.createClientSocket();
+    }
+
     createClientSocket() {
+
+        if ((typeof window === "undefined") || (typeof window.document === "undefined")) return; //in case it is not executed on the Client Browser
+
         console.log('Client Socket Constructor');
 
         this.socket = io.connect(this.sServerSocketAddress, {
@@ -98,6 +107,7 @@ export class SocketService {
             this.dispatch(SocketStatusActions.socketDisconnected());
         });
 
+        clearInterval(this.createClientSocketInterval);
     }
 
     /*

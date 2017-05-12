@@ -16,8 +16,7 @@ import {
 export default class LoginPage extends React.Component {
 
     back(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         this.props.router.goBack();
     }
 
@@ -31,7 +30,7 @@ export default class LoginPage extends React.Component {
 
     render() {
         return (
-            <div id='auth-container' className='login'>
+            <div id='auth-container' className='login' style={{marginTop: 75}}>
                 <div id='auth-row'>
                     <div id='auth-cell'>
                         <Grid>

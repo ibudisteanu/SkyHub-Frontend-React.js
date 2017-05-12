@@ -26,7 +26,7 @@ export class AuthService {
 
             this.SocketService = new SocketService(dispatch);
             this.dispatch = dispatch;
-            this.loadCookieUser();
+            this.loadCookieUserDocumentReady();
 
             authServiceInstance = this;
         }
@@ -34,10 +34,20 @@ export class AuthService {
         return authServiceInstance;
     }
 
+    loadCookieUserDocumentReady (){
+        this.loadCookieInterval = setInterval(::this.loadCookieUser,500);
+        this.loadCookieUser();
+    }
+
     loadCookieUser ( ){
-        var token = CookiesService.getTokenCookie();
-        if (token !== ""){
-            this.loginTokenAsync(token);
+
+        if ((typeof window !== "undefined")&& (typeof window.document !== "undefined")){
+            var token = CookiesService.getTokenCookie();
+            if (token !== ""){
+                this.loginTokenAsync(token);
+            }
+
+            clearInterval(this.loadCookieInterval);
         }
     }
 
@@ -48,7 +58,7 @@ export class AuthService {
         return new Promise( (resolve)=> {
 
             //Using Promise
-            this.SocketService.sendRequestGetDataPromise("auth/login",{emailUsername:sEmailUserName, password:sPassword}).then( (resData : any) => {
+            this.SocketService.sendRequestGetDataPromise("auth/login",{emailUsername:sEmailUserName, password:sPassword}).then( (resData) => {
 
                 console.log('Answer from Server Auth Login');
                 console.log(resData);
@@ -73,6 +83,8 @@ export class AuthService {
     loginTokenAsync(token){
         return new Promise( (resolve)=> {
             //Using Promise
+
+            this.SocketService.createClientSocket();
             this.SocketService.sendRequestGetDataPromise("auth/login-token",{token: token}).then( (resData ) => {
 
                 console.log('Answer from Login Token Async');
@@ -114,6 +126,7 @@ export class AuthService {
     }
 
     logout(){
+        CookiesService.deleteCookie("token");
         this.dispatch(UserAuthenticatedActions.logoutUserAuthenticated());
     }
 

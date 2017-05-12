@@ -7,6 +7,13 @@ import { IndexRoute, Route } from 'react-router';
 
 import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
 
+/*
+ LOADING stores
+ */
+
+
+import {websiteStore} from "./modules/redux/website/website-store";
+
 /* Common Components */
 
 import Sidebar from './common/sidebar';
@@ -86,35 +93,46 @@ import WebsiteIndex from './modules/website/pages/Website-index.component';
 import SocketClient from './modules/services/REST/socket/socket.service';
 
 
-/*
- LOADING stores
- */
-
-import {websiteStore} from "./modules/redux/website/website-store";
-
 class App extends React.Component {
-  render() {
-    return (
-        //<SocketProvider socket={SocketClient}>
-          <Provider store = {websiteStore}>
-              <MainContainer {...this.props}>
-                <Sidebar />
-                <Header />
-                <div id='body'>
-                  <Grid>
-                    <Row>
-                      <Col xs={12}>
-                        {this.props.children}
-                      </Col>
-                    </Row>
-                  </Grid>
-                </div>
-                <Footer />
-              </MainContainer>
-          </Provider>
-      //  </SocketProvider>
-    );
-  }
+    render() {
+        return (
+            //<SocketProvider socket={SocketClient}>
+            <Provider store = {websiteStore}>
+                <MainContainer {...this.props}>
+                    <Sidebar />
+                    <Header />
+                    <div id='body'>
+                        <Grid>
+                            <Row>
+                                <Col xs={12}>
+                                    {this.props.children}
+                                </Col>
+                            </Row>
+                        </Grid>
+                    </div>
+                    <Footer />
+                </MainContainer>
+            </Provider>
+            //  </SocketProvider>
+        );
+    }
+}
+
+class AppSimplePage extends React.Component {
+    render() {
+        return (
+            //<SocketProvider socket={SocketClient}>
+            <Provider store = {websiteStore}>
+                <MainContainer  {...this.props} >
+                    <Header />
+
+                    {this.props.children}
+
+                </MainContainer >
+            </Provider>
+            //  </SocketProvider>
+        );
+    }
 }
 
 /**
@@ -176,7 +194,7 @@ const routes = (
  * No Sidebar, Header or Footer. Only the Body is rendered.
  */
 const basicRoutes = (
-  <Route>
+  <Route component={AppSimplePage}>
     <Route path='lock' component={Lock} />
     <Route path='login' component={LoginPage} />
     <Route path='registration' component={RegistrationPage} />

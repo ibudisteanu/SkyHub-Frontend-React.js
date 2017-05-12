@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
-import { SocketService } from '../../../services/REST/socket/socket.service';
 import { AuthService } from '../../../services/REST/authentication/auth.service';
 
 import {
@@ -31,14 +30,21 @@ import {
 )
 export class LoginForm extends React.Component {
 
-    sPassword = '';
-    sUserEmail = '';
+    password = null;
+    userEmail = null;
+
+    userEmailValidatedStatus = null;
+    passwordValidatedStatus = null;
 
     constructor(props) {
         super(props);
 
-        // this.SocketService = new SocketService(props.dispatch);
         this.AuthService = new AuthService(props.dispatch);
+
+         this.state = {
+             userEmailValidatedStatus : null,
+             passwordValidatedStatus : null,
+         }
     }
 
     back(e) {
@@ -55,13 +61,34 @@ export class LoginForm extends React.Component {
         $('html').removeClass('authentication');
     }
 
-    handleCheckLogin(){
+    handleCheckLogin(e){
 
-        console.log(this.props.sPassword);
-        console.log(this.props.sUserEmail);
+        e.preventDefault(); e.stopPropagation();
 
- //       this.AuthService.loginAsync(this.props.sUserEmail, this.props.sPassword);
+        console.log(this);
+        console.log(this.password.value);
+        console.log(this.userEmail.value);
 
+        this.AuthService.loginAsync(this.userEmail.value, this.password.value).then( (res) =>{
+
+            var userEmailValidatedStatus = null; var passwordValidatedStatus = null;
+
+            console.log("Answer from server", res);
+
+            if (res.result === "false"){
+                if (res.message === "No User Found") {
+                    userEmailValidatedStatus = "error";
+                    passwordValidatedStatus = "error";
+                }
+                if (res.message === "Password Incorrect") passwordValidatedStatus = "error";
+            }
+
+            this.setState({
+                userEmailValidatedStatus : userEmailValidatedStatus,
+                passwordValidatedStatus : passwordValidatedStatus,
+            });
+
+        });
     }
 
     render() {
@@ -83,21 +110,23 @@ export class LoginForm extends React.Component {
                                 or use your SkyHub account
                             </div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                                <Form onSubmit={::this.back}>
-                                    <FormGroup controlId='emailaddress'>
+                                <Form onSubmit={::this.handleCheckLogin}>
+                                    <FormGroup controlId='emailaddress' validationState={this.state.userEmailValidatedStatus} >
                                         <InputGroup bsSize='large'>
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-mail' />
                                             </InputGroup.Addon>
-                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='username   or    email'  />
+                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='username   or    email'  inputRef={(input) => this.userEmail = input} defaultValue={''} />
+                                            <FormControl.Feedback />
                                         </InputGroup>
                                     </FormGroup>
-                                    <FormGroup controlId='password'>
+                                    <FormGroup controlId='password' validationState={this.state.passwordValidatedStatus}>
                                         <InputGroup bsSize='large'>
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-key' />
                                             </InputGroup.Addon>
-                                            <FormControl type='password' className='border-focus-blue' placeholder='password' />
+                                            <FormControl type='password' className='border-focus-blue' placeholder='password' inputRef={(input) => this.password = input} defaultValue={''}/>
+                                            <FormControl.Feedback />
                                         </InputGroup>
                                     </FormGroup>
                                     <FormGroup>

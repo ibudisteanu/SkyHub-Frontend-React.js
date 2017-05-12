@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
 import { SocketService } from '../../../services/REST/socket/socket.service';
+import { AuthService } from '../../../services/REST/authentication/auth.service';
 
 import {
     Row,
@@ -34,6 +35,7 @@ export class RegistrationForm extends React.Component {
         super(props);
 
         this.SocketService = new SocketService(props.dispatch);
+        this.AuthService = new AuthService(props.dispatch);
     }
 
     back(e) {
@@ -48,6 +50,13 @@ export class RegistrationForm extends React.Component {
 
     componentWillUnmount() {
         $('html').removeClass('authentication');
+    }
+
+    validateEmail() {
+        const length = this.state.value.length;
+        if (length > 10) return 'success';
+        else if (length > 5) return 'warning';
+        else if (length > 0) return 'error';
     }
 
     render() {
@@ -66,30 +75,53 @@ export class RegistrationForm extends React.Component {
                         <div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
                                 <Form onSubmit={::this.back}>
-                                    <FormGroup controlId='username'>
-                                        <InputGroup bsSize='large'>
-                                            <InputGroup.Addon>
-                                                <Icon glyph='icon-fontello-user' />
-                                            </InputGroup.Addon>
-                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='Username' />
-                                        </InputGroup>
-                                    </FormGroup>
-                                    <FormGroup controlId='emailaddress'>
-                                        <InputGroup bsSize='large'>
-                                            <InputGroup.Addon>
-                                                <Icon glyph='icon-fontello-mail' />
-                                            </InputGroup.Addon>
-                                            <FormControl type='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
-                                        </InputGroup>
-                                    </FormGroup>
-                                    <FormGroup controlId='password'>
-                                        <InputGroup bsSize='large'>
-                                            <InputGroup.Addon>
-                                                <Icon glyph='icon-fontello-key' />
-                                            </InputGroup.Addon>
-                                            <FormControl type='password' className='border-focus-blue' placeholder='password' />
-                                        </InputGroup>
-                                    </FormGroup>
+                                    <Row>
+                                        <Col xs={6} collapseLeft collapseRight >
+                                            <FormGroup controlId='username'>
+                                                <InputGroup bsSize='large' style={{marginRight: 10}}>
+                                                    <InputGroup.Addon>
+                                                        <Icon glyph='icon-fontello-user' />
+                                                    </InputGroup.Addon>
+                                                    <FormControl autoFocus type='text' className='border-focus-blue' placeholder='Username' />
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+
+                                        <Col xs={6} collapseLeft collapseRight >
+                                            <FormGroup controlId='emailaddress'>
+                                                <InputGroup bsSize='large'>
+                                                    <InputGroup.Addon>
+                                                        <Icon glyph='icon-fontello-mail' />
+                                                    </InputGroup.Addon>
+                                                    <FormControl type='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+
+                                    <Row>
+                                        <Col xs={6} collapseLeft collapseRight >
+                                            <FormGroup controlId='password'>
+                                                <InputGroup bsSize='large' style={{marginRight: 10}}>
+                                                    <InputGroup.Addon>
+                                                        <Icon glyph='icon-fontello-key' />
+                                                    </InputGroup.Addon>
+                                                    <FormControl type='password' className='border-focus-blue' placeholder='password' />
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col xs={6} collapseLeft collapseRight >
+                                            <FormGroup controlId='retypepassword'>
+                                                <InputGroup bsSize='large'>
+                                                    <InputGroup.Addon>
+                                                        <Icon glyph='icon-fontello-key' />
+                                                    </InputGroup.Addon>
+                                                    <FormControl type='password' className='border-focus-blue' placeholder='password' />
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+
                                     <FormGroup>
                                         <Grid>
                                             <Row>
