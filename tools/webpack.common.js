@@ -2,6 +2,10 @@ module.exports = {
   module: {
     loaders: [
       {
+          test: /\.css$/,
+          loader: 'null' //not rendering css in the server  according to his solution: https://github.com/zinserjan/mocha-webpack/issues/5
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules|bower_components/,
         loader: 'babel'
