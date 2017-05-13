@@ -12,8 +12,8 @@ import Select from 'react-select';
 
 import CountrySelect from "react-country-select";
 
-// Be sure to include styles at some point, probably during your bootstrapping
-//import 'react-select/dist/react-select.css';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 import {
     Row,
@@ -216,6 +216,14 @@ export class RegistrationForm extends React.Component {
         });
     }
 
+    responseFacebook(response) {
+        console.log(response);
+    }
+
+    responseGoogle (response){
+       console.log(response);
+    }
+
     render() {
 
         var onSuccess = this.props.onSuccess || function (){};
@@ -231,6 +239,7 @@ export class RegistrationForm extends React.Component {
                         </div>
                         <div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
+
 
                                 <Form onSubmit={::this.handleCheckRegister}>
 
@@ -367,9 +376,26 @@ export class RegistrationForm extends React.Component {
                                 <div style={{marginBottom: 12.5}}>SIGN UP WITH</div>
                                 <Grid>
                                     <div style={{marginTop: 12.5, marginBottom: 12.5}}>
-                                        <Button id='facebook-btn' bsStyle='darkblue' type='submit' onClick={::this.back}>
-                                            <Icon glyph='icon-fontello-facebook' />
-                                        </Button>
+
+                                        <FacebookLogin
+                                            appId="622709767918813"
+                                            autoLoad={true}
+                                            fields="id,name,email,picture,cover,first_name,last_name,age_range,link,gender,locale,timezone,updated_time,verified"
+                                            scope="public_profile,user_friends"
+                                            icon="icon-fontello-facebook"
+                                            textButton=""
+                                            callback={this.responseFacebook}
+                                            cssClass="btn-darkblue btn-lg btn-default btn-social-network"
+                                        />
+
+                                        <GoogleLogin
+                                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                                            buttonText="Login"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogle}
+                                        />,
+
+
                                         <Button id='google-btn' bsStyle='danger' type='submit' onClick={::this.back}>
                                             <Icon glyph='icon-fontello-google' />
                                         </Button>

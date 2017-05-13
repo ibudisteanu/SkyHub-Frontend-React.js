@@ -55,3 +55,8 @@ tmp/
 .idea/workspace.xml
 .idea/workspace.xml
 tmp/bundle.js
+tmp/bundle.js.map
+
+node_modules/
+tmp/
+.idea/workspace.xml
