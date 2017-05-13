@@ -44,13 +44,7 @@ export class RegistrationForm extends React.Component {
         this.props.router.goBack();
     }
 
-    componentDidMount() {
-        $('html').addClass('authentication');
-    }
 
-    componentWillUnmount() {
-        $('html').removeClass('authentication');
-    }
 
     validateEmail() {
         const length = this.state.value.length;
