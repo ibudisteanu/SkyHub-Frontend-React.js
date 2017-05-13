@@ -31,8 +31,6 @@ import {
 )
 export class LoginForm extends React.Component {
 
-    password = null;
-    userEmail = null;
 
     constructor(props) {
         super(props);
@@ -40,10 +38,12 @@ export class LoginForm extends React.Component {
         this.AuthService = new AuthService(props.dispatch);
 
          this.state = {
-             userEmailValidationStatus : null,
-             passwordValidationStatus : null,
-             userEmailValidationStatusText : '',
-             passwordValidationStatusText : '',
+
+             userEmail : '',
+             password : '',
+
+             userEmailValidationStatus : [null, ''],
+             passwordValidationStatus : [null, ''],
          }
     }
 
@@ -62,23 +62,21 @@ export class LoginForm extends React.Component {
         var onSuccess = this.props.onSuccess || function (){};
         var onError = this.props.onError || function (){};
 
-        console.log(this.password.value, this.userEmail.value);
+        console.log(this.state.userEmail, this.state.password);
 
-        this.AuthService.loginAsync(this.userEmail.value, this.password.value).then( (res) =>{
+        this.AuthService.loginAsync(this.state.userEmail, this.state.password).then( (res) =>{
 
-            var userEmailValidationStatus = null, passwordValidationStatus = null,  userEmailValidationStatusText='', passwordValidationStatusText ='' ;
+            var userEmailValidationStatus = [null, ''], passwordValidationStatus = [null,''];
 
             if (res.result === "true") onSuccess(res);
             else
             if (res.result === "false"){
                 if (res.message === "No User Found") {
-                    userEmailValidationStatus = "error";
-                    userEmailValidationStatusText = "No User Found";
+                    userEmailValidationStatus = ["error","No User Found"];
                 }
                 if (res.message === "Password Incorrect") {
-                    userEmailValidationStatus = "success";
-                    passwordValidationStatus = "error";
-                    passwordValidationStatusText = "Incorrect Password";
+                    userEmailValidationStatus = ["success",''];
+                    passwordValidationStatus = ["error","Incorrect Password"];
                 }
 
                 onError(res);
@@ -86,20 +84,24 @@ export class LoginForm extends React.Component {
 
             this.setState({
                 userEmailValidationStatus : userEmailValidationStatus,
-                userEmailValidationStatusText : userEmailValidationStatusText,
                 passwordValidationStatus : passwordValidationStatus,
-                passwordValidationStatusText : passwordValidationStatusText,
             });
 
         });
     }
 
     handleUserEmailChange(e){
-        this.setState({userEmailValidationStatus  : null, userEmailValidationStatusText : ''});
+        this.setState({
+            userEmail : e.target.value,
+            userEmailValidationStatus  : [null, ''],
+        });
     }
 
     handlePasswordChange(e){
-        this.setState({passwordValidationStatus  : null, passwordValidationStatusText : ''});
+        this.setState({
+            password : e.target.value,
+            passwordValidationStatus  : [null, '']
+        });
     }
 
     render() {
@@ -121,25 +123,25 @@ export class LoginForm extends React.Component {
                             </div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
                                 <Form onSubmit={::this.handleCheckLogin}>
-                                    <FormGroup controlId='emailaddress' validationState={this.state.userEmailValidationStatus} >
+                                    <FormGroup controlId='emailaddress' validationState={this.state.userEmailValidationStatus[0]} >
                                         <InputGroup bsSize='large'>
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-mail' />
                                             </InputGroup.Addon>
-                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='username   or    email'  inputRef={(input) => this.userEmail = input} defaultValue={''} onChange={::this.handleUserEmailChange} />
+                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='username   or    email'  value={this.state.userEmail} onChange={::this.handleUserEmailChange} />
                                             <FormControl.Feedback />
                                         </InputGroup>
-                                        <HelpBlock>{this.state.userEmailValidationStatusText}</HelpBlock>
+                                        <HelpBlock>{this.state.userEmailValidationStatus[1]}</HelpBlock>
                                     </FormGroup>
-                                    <FormGroup controlId='password' validationState={this.state.passwordValidationStatus}>
+                                    <FormGroup controlId='password' validationState={this.state.passwordValidationStatus[0]}>
                                         <InputGroup bsSize='large'>
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-key' />
                                             </InputGroup.Addon>
-                                            <FormControl type='password' className='border-focus-blue' placeholder='password' inputRef={(input) => this.password = input} defaultValue={''} onChange={::this.handlePasswordChange}/>
+                                            <FormControl type='password' className='border-focus-blue' placeholder='password' value={this.state.password} onChange={::this.handlePasswordChange}/>
                                             <FormControl.Feedback />
                                         </InputGroup>
-                                        <HelpBlock>{this.state.userEmailValidationStatusText}</HelpBlock>
+                                        <HelpBlock>{this.state.userEmailValidationStatus[1]}</HelpBlock>
                                     </FormGroup>
                                     <FormGroup>
                                         <Grid>

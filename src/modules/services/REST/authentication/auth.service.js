@@ -102,18 +102,17 @@ export class AuthService {
         });
     }
 
-    registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry, sCity){
+    registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry, sCity, sLatitude, sLongitude){
 
         return new Promise( (resolve)=> {
 
             //Using Promise
             this.SocketService.sendRequestGetDataPromise("auth/register",{email:sEmailAddress, username: sUsername, password: sPassword,
-                firstName: sFirstName, lastName: sLastName, country: sCountry, city : sCity }).then( (resData : any) => {
+                firstName: sFirstName, lastName: sLastName, country: sCountry, city : sCity, latitude: sLatitude, longitude : sLongitude }).then( (resData ) => {
 
-                console.log('Answer from Server Auth Login');
-                console.log(resData);
+                console.log('Answer from Server Auth Register', resData);
 
-                if(resData.success) {
+                if(resData.result === "true") {
                     this.loginAsync(sEmailAddress, sPassword);
                 }
 
