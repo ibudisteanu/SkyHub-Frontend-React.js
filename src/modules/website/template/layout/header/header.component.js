@@ -56,19 +56,20 @@ export default class Header extends React.Component {
           <Col xs={12}>
             <Navbar fixedTop fluid id='rubix-nav-header'>
               <Row>
-                <Col xs={3} visible='xs'>
+                <Col xs={1} visible='xs'>
                   <SidebarBtn />
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={3} sm={3}>
                   <Brand />
                 </Col>
-                <Col xs={3} sm={8} collapseRight className='text-right'>
+                <Col className='text-right' style={{paddingRight:0}}>
 
                     { this.props.userAuthenticated.user.isLoggedIn() ? ::this.renderNavigationAuthenticated() : ::this.renderNavigationNotAuthenticated() }
 
                 </Col>
 
                 <HeaderBarSocketStatus />
+
 
               </Row>
             </Navbar>

@@ -21,8 +21,9 @@
 @import "fonts/Stroke-Gap-Icons/Stroke-Gap-Icons";
 
 /* Component styles */
+@import "components/header";
 @import "components/sidebar";
-@import "components/_reactSelect";
+@import "components/reactSelect";
 
 /* Page styles */
 @import "pages/auth";

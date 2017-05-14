@@ -1,0 +1,33 @@
+@mixin theme-header($list) {
+  #navbar {
+    max-width:50px;
+  }
+}
+
+
+.navbar-nav-item {
+  font-size: 23px !important;
+}
+
+.navbar-nav-item-icon {
+  font-size: 23px !important;
+}
+
+
+
+@media (max-width: 989px)  
+{
+  .navbar-nav .open .dropdown-menu{
+    position: absolute;
+    float: left;
+    background-color: #fff;
+    margin-left: -290px;
+  }
+}
+
+@media (max-width: 400px)
+{
+  .navbar-nav .open .dropdown-menu{
+    width: 300px;
+  }
+}

@@ -13,6 +13,7 @@ import { Link, withRouter } from 'react-router';
 import {getPath} from 'common/common-functions';
 import { AuthService } from '../../../../services/REST/authentication/auth.service';
 
+import {HeaderDirectNavItem} from './components/header-direct-nav-item.component';
 
 import l20n, { Entity } from '@sketchpixy/rubix/lib/L20n';
 
@@ -31,29 +32,6 @@ import {
     Radio,
     Col } from '@sketchpixy/rubix';
 
-
-
-@withRouter
-class DirectNavItem extends React.Component {
-    render() {
-        var active = false;
-        var currentLocation = this.props.location.pathname;
-
-        if(!active && this.props.path) {
-            active = this.props.router.isActive(this.props.path) && (currentLocation == this.props.path);
-        }
-
-        var classes = classNames({
-            'pressed': active
-        }, this.props.className);
-
-        return (
-            <NavItem className={classes} style={this.props.style} href={this.props.path} to={this.props.path} componentClass={Link}>
-                <Icon bundle={this.props.bundle || 'fontello'} glyph={this.props.glyph} />
-            </NavItem>
-        );
-    }
-}
 
 class Skins extends React.Component {
     static skins = ['default', 'green', 'blue', 'purple', 'brown', 'cyan'];
@@ -297,7 +275,7 @@ class FlagMenu extends React.Component {
 
     render() {
         const flagIcon = (
-            <img src={`/imgs/app/flags/flags/flat/32/${this.state.selectedFlag}.png`} width='32' height='32' />
+            <img src={`/imgs/app/flags/flags/flat/32/${this.state.selectedFlag}.png`} width='24' height='24' />
         );
 
         let menuItems = flagMenuItems.map(({name, flag, lang}, i) => {
@@ -306,7 +284,7 @@ class FlagMenu extends React.Component {
                     <Grid>
                         <Row>
                             <Col xs={2}>
-                                <img src={`/imgs/app/flags/flags/flat/32/${flag}.png`} alt={name} width='32' height='32' />
+                                <img src={`/imgs/app/flags/flags/flat/32/${flag}.png`} alt={name} width='24' height='24' />
                             </Col>
                             <Col xs={10}>
                                 <Entity className='lang-menu-text' entity='languageMenu' data={{lang}} defaultValue={name} />
@@ -358,7 +336,7 @@ class SettingsMenu extends React.Component {
 
     render() {
         const cogIcon = (
-            <Icon bundle='fontello' glyph='cog-7' style={{position: 'relative', top: 2}} />
+            <Icon bundle='fontello' className="navbar-nav-item-icon" glyph='cog-7' style={{position: 'relative', top: 2}} />
         );
 
         let { fluidLayout } = this.state;
@@ -395,9 +373,9 @@ class NotificationsMenu extends React.Component {
     render() {
         const bullhornIcon = (
             <span>
-        <Icon bundle='fontello' glyph='bullhorn' />
-        <Badge className='fg-darkbrown bg-orange notification-badge'>3</Badge>
-      </span>
+                <Icon bundle='fontello' glyph='bullhorn' className="navbar-nav-item-icon" />
+                <Badge className='fg-darkbrown bg-orange notification-badge'>3</Badge>
+            </span>
         );
 
         return (
@@ -492,7 +470,7 @@ class RssMenu extends React.Component {
     render() {
         const rssfeedIcon = (
             <span>
-        <Icon bundle='fontello' glyph='rss-1' />
+        <Icon bundle='fontello' glyph='rss-1' style={{fontSize:22}} />
         <Badge className='fg-darkgreen bg-darkgreen40 notification-badge'>4</Badge>
       </span>
         );
@@ -631,30 +609,37 @@ export class HeaderNavigationAuthenticated extends React.Component {
 
     render() {
         return (
-            <Nav pullRight>
+            <Nav pullRight  style={{display: "-webkit-inline-box"}}>
+
 
 
                 <Nav className='hidden-xs'>
                     <NavItem divider />
-                    <NavItem eventKey={1} href='#' className='hidden-sm' onClick={::this.handleSkinSwitch}>
-                        <Icon glyph='icon-fontello-circle' className='fg-theme' style={{lineHeight: 1, fontSize: 24, top: 2, position: 'relative' }} />
-                    </NavItem>
-                    <NavItem divider />
+
+                    <HeaderDirectNavItem glyph='circle' eventKey={1} path='#' iconClassName='fg-theme' onClick={::this.handleSkinSwitch} iconStyle={{fontSize:20}} />
+
                     <FlagMenu />
+
                     <NavItem divider />
-                    <DirectNavItem glyph='user-female' eventKey={3} path={getPath(this,'social')} className='small-font' style={{position: 'relative', top: 2}} />
-                    <SettingsMenu />
-                    <NavItem divider />
-                    <DirectNavItem glyph='mail-3' eventKey={5} path={getPath(this,'mailbox/inbox')} />
-                    <NotificationsMenu />
-                    <RssMenu />
-                </Nav>
-                <Nav>
-                    <NavItem className='logout' href='#' onClick={::this.handleLogout}>
-                        <Icon bundle='fontello' glyph='off-1' />
-                    </NavItem>
                 </Nav>
 
+
+
+                    <HeaderDirectNavItem glyph='user-female' eventKey={3} path={getPath(this,'social')} style={{position: 'relative'}} />
+
+                    <SettingsMenu />
+
+                    <NavItem divider />
+
+                    <HeaderDirectNavItem glyph='mail-3' eventKey={5} path={getPath(this,'mailbox/inbox')} />
+
+                    <NotificationsMenu />
+
+                    <RssMenu />
+
+                    <NavItem className='logout' href='#' onClick={::this.handleLogout} >
+                        <Icon bundle='fontello' glyph='off-1' />
+                    </NavItem>
 
             </Nav>
         );

@@ -390,15 +390,16 @@ export class RegistrationForm extends React.Component {
 
                                         <GoogleLogin
                                             clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                                            buttonText="Login"
-                                            onSuccess={responseGoogle}
-                                            onFailure={responseGoogle}
-                                        />,
-
-
-                                        <Button id='google-btn' bsStyle='danger' type='submit' onClick={::this.back}>
+                                            buttonText=""
+                                            className="btn-danger btn-lg btn-default btn-social-network"
+                                            onSuccess={this.responseGoogle}
+                                            onFailure={this.responseGoogle}
+                                        >
                                             <Icon glyph='icon-fontello-google' />
-                                        </Button>
+                                        </GoogleLogin>
+
+
+
                                         <Button id='twitter-btn' bsStyle='blue' type='submit' onClick={::this.back}>
                                             <Icon glyph='icon-fontello-twitter' />
                                         </Button>
