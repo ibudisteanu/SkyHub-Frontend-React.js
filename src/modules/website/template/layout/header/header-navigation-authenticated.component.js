@@ -611,8 +611,6 @@ export class HeaderNavigationAuthenticated extends React.Component {
         return (
             <Nav pullRight  style={{display: "-webkit-inline-box"}}>
 
-
-
                 <Nav className='hidden-xs'>
                     <NavItem divider />
 
@@ -625,21 +623,21 @@ export class HeaderNavigationAuthenticated extends React.Component {
 
 
 
-                    <HeaderDirectNavItem glyph='user-female' eventKey={3} path={getPath(this,'social')} style={{position: 'relative'}} />
+                <HeaderDirectNavItem glyph='user-female' eventKey={3} path={getPath(this,'social')} style={{position: 'relative'}} />
 
-                    <SettingsMenu />
+                <SettingsMenu />
 
-                    <NavItem divider />
+                <NavItem divider />
 
-                    <HeaderDirectNavItem glyph='mail-3' eventKey={5} path={getPath(this,'mailbox/inbox')} />
+                <HeaderDirectNavItem glyph='mail-3' eventKey={5} path={getPath(this,'mailbox/inbox')} />
 
-                    <NotificationsMenu />
+                <NotificationsMenu />
 
-                    <RssMenu />
+                <RssMenu />
 
-                    <NavItem className='logout' href='#' onClick={::this.handleLogout} >
-                        <Icon bundle='fontello' glyph='off-1' />
-                    </NavItem>
+                <NavItem className='logout' href='#' onClick={::this.handleLogout} >
+                    <Icon bundle='fontello' glyph='off-1' />
+                </NavItem>
 
             </Nav>
         );

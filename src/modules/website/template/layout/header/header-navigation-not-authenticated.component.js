@@ -8,8 +8,11 @@ import React from 'react';
 import {AuthenticationModal} from "./../../../../users/authentication/modals/authentication.modal";
 import * as UserAuthenticatedActions from '../../../../redux/website/actions/userAuthenticated-actions.js';
 
+
 import {connect} from "react-redux";
 import { Link, withRouter } from 'react-router';
+
+import {HeaderDirectNavItem} from './components/header-direct-nav-item.component';
 
 import {
     Nav,
@@ -51,20 +54,12 @@ export class HeaderNavigationNotAuthenticated extends React.Component {
 
     render() {
         return (
-            <Nav pullRight>
+            <Nav pullRight  style={{display: "-webkit-inline-box"}}>
 
                 <AuthenticationModal ref={(c) => this.authenticationModal = c} />
 
-                <Nav>
-                    <NavItem onClick={::this.handleSignIn}>
-                        Login
-                    </NavItem>
-
-                    <NavItem onClick={::this.handleRegister}>
-                        Register
-                    </NavItem>
-
-                </Nav>
+                <HeaderDirectNavItem glyph='login-1' eventKey={3} style={{position: 'relative'}} onClick={::this.handleSignIn} text="Login" />
+                <HeaderDirectNavItem glyph='users' eventKey={3} style={{position: 'relative'}} onClick={::this.handleRegister} text="Register" />
 
             </Nav>
         );

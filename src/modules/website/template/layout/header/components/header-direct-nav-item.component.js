@@ -33,6 +33,7 @@ export class HeaderDirectNavItem extends React.Component {
         return (
             <NavItem className={classes} style={this.props.style} href={this.props.path} to={this.props.path} componentClass={Link} onClick={this.props.onClick}>
                 <Icon bundle={this.props.bundle || 'fontello'} className={"navbar-nav-item-icon "+this.props.iconClassName+" "} style={this.props.iconStyle}  glyph={this.props.glyph}  />
+                {this.props.text !== "" ? <strong>{this.props.text}</strong> : ''}
             </NavItem>
         );
     }
