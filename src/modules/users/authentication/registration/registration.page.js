@@ -1,3 +1,8 @@
+/**
+ * Created by Alexandru Ionut Budisteanu - SkyHub
+ * (C) BIT TECHNOLOGIES
+ */
+
 import React from 'react';
 import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';

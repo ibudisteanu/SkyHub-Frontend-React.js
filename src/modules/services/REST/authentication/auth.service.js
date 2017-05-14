@@ -102,13 +102,15 @@ export class AuthService {
         });
     }
 
-    registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry, sCity, sLatitude, sLongitude){
+    registerAsync(sUsername, sEmailAddress, sPassword, sFirstName, sLastName, sCountry, sLanguage, sCity, sLatitude, sLongitude){
 
         return new Promise( (resolve)=> {
 
             //Using Promise
             this.SocketService.sendRequestGetDataPromise("auth/register",{email:sEmailAddress, username: sUsername, password: sPassword,
-                firstName: sFirstName, lastName: sLastName, country: sCountry, city : sCity, latitude: sLatitude, longitude : sLongitude }).then( (resData ) => {
+                firstName: sFirstName, lastName: sLastName, country: sCountry, language : sLanguage, city : sCity, latitude: sLatitude, longitude : sLongitude })
+
+                .then( (resData ) => {
 
                 console.log('Answer from Server Auth Register', resData);
 
@@ -117,11 +119,33 @@ export class AuthService {
                 }
 
                 resolve(resData);
-
             });
 
         });
 
+    }
+
+    registerOAuthAsync(sSocialNetworkName,sSocialNetworkId, sAccessToken, sEmail, sFirstName, sLastName,sProfilePic, sCoverImage, sCountryCode, sLanguage, sCity, latitude, longitude, sGender, iAge, iTimeZone, bVerified) {
+
+        return new Promise( (resolve)=> {
+
+            //Using Promise
+            this.SocketService.sendRequestGetDataPromise("auth/register-oauth",{socialNetwork: sSocialNetworkName, socialNetworkId: sSocialNetworkId, accessToken : sAccessToken,
+                email:sEmail, firstName: sFirstName, lastName: sLastName, profilePic : sProfilePic, coverPic : sCoverImage, country: sCountryCode, language:sLanguage, city : sCity,
+                latitude: latitude, longitude : longitude, gender : sGender,  age : iAge, timeZone: iTimeZone, verified: bVerified})
+
+                .then( (resData ) => {
+
+                    console.log('Answer from Oauth', resData);
+
+                    if(resData.result === "true") {
+
+                    }
+
+                    resolve(resData);
+                });
+
+        });
     }
 
     logout(){

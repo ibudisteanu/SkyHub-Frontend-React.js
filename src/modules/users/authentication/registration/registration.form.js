@@ -1,3 +1,8 @@
+/**
+ * Created by Alexandru Ionut Budisteanu - SkyHub
+ * (C) BIT TECHNOLOGIES
+ */
+
 import React from 'react';
 import {connect} from "react-redux";
 import classNames from 'classnames';
@@ -12,8 +17,7 @@ import Select from 'react-select';
 
 import CountrySelect from "react-country-select";
 
-import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
+import {OauthSocialNetworkComponent} from '../oauth-social-networks-form/oauth.social.networks.component';
 
 import {
     Row,
@@ -115,7 +119,9 @@ export class RegistrationForm extends React.Component {
 
 
         if (!bValidationError)
-        this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, this.state.city, this.state.latitude, this.state.longitude).then( (res) =>{
+        this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude)
+
+            .then( (res) =>{
 
             console.log(res);
 
@@ -230,12 +236,12 @@ export class RegistrationForm extends React.Component {
         var onSwitch = this.props.onSwitch || function (){};
 
         return (
-            <PanelContainer controls={false}>
+            <PanelContainer controls={false} style={{marginBottom:0}}>
 
                 <Panel>
                     <PanelBody style={{padding: 0}}>
                         <div className='text-center bg-darkblue fg-white'>
-                            <h3 style={{margin: 0, padding: 25}}> <strong>Sign up</strong> to SkyHub </h3>
+                            <h3 style={{margin: 0, padding: 20}}> <strong>Sign up</strong> to SkyHub </h3>
                         </div>
                         <div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
@@ -247,7 +253,7 @@ export class RegistrationForm extends React.Component {
 
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='userNameInput' validationState={this.state.userNameValidationStatus[0]}>
-                                                <InputGroup bsSize='large' style={{marginRight: 10}}>
+                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-user' />
                                                     </InputGroup.Addon>
@@ -260,7 +266,7 @@ export class RegistrationForm extends React.Component {
 
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='emailAddressInput' validationState={this.state.emailAddressValidationStatus[0]}>
-                                                <InputGroup bsSize='large'>
+                                                <InputGroup bsSize='normal'>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-mail' />
                                                     </InputGroup.Addon>
@@ -275,7 +281,7 @@ export class RegistrationForm extends React.Component {
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='firstName' validationState={this.state.firstNameValidationStatus[0]}>
-                                                <InputGroup bsSize='large' style={{marginRight: 10}}>
+                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-font' />
                                                     </InputGroup.Addon>
@@ -287,7 +293,7 @@ export class RegistrationForm extends React.Component {
                                         </Col>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='lastName' validationState={this.state.lastNameValidationStatus[0]}>
-                                                <InputGroup bsSize='large'>
+                                                <InputGroup bsSize='normal'>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-bold' />
                                                     </InputGroup.Addon>
@@ -302,7 +308,7 @@ export class RegistrationForm extends React.Component {
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='password' validationState={this.state.passwordValidationStatus[0]}>
-                                                <InputGroup bsSize='large' style={{marginRight: 10}}>
+                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-key' />
                                                     </InputGroup.Addon>
@@ -314,7 +320,7 @@ export class RegistrationForm extends React.Component {
                                         </Col>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='retypepassword' validationState={this.state.retypePasswordValidationStatus[0]}>
-                                                <InputGroup bsSize='large'>
+                                                <InputGroup bsSize='normal'>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-key' />
                                                     </InputGroup.Addon>
@@ -329,7 +335,7 @@ export class RegistrationForm extends React.Component {
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='country' validationState={this.state.countryValidationStatus[0]}>
-                                                <InputGroup bsSize='large' style={{marginRight: 10}}>
+                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-flag-1' />
                                                     </InputGroup.Addon>
@@ -342,7 +348,7 @@ export class RegistrationForm extends React.Component {
                                         </Col>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='city' validationState={this.state.cityValidationStatus[0]}>
-                                                <InputGroup bsSize='large'>
+                                                <InputGroup bsSize='normal'>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-home-1' />
                                                     </InputGroup.Addon>
@@ -359,7 +365,7 @@ export class RegistrationForm extends React.Component {
                                             <Row>
                                                 <Col xs={6} collapseLeft collapseRight style={{paddingTop: 10}}>
 
-                                                    <div style={{marginTop: 25}}>
+                                                    <div>
                                                         <Link to={getPath(this,'login')} onClick = {onSwitch.bind(this)}> <strong> Login </strong></Link>to SkyHub
                                                     </div>
 
@@ -372,41 +378,9 @@ export class RegistrationForm extends React.Component {
                                     </FormGroup>
                                 </Form>
                             </div>
-                            <div className='bg-hoverblue fg-black50 text-center' style={{padding: 25, paddingTop: 12.5}}>
-                                <div style={{marginBottom: 12.5}}>SIGN UP WITH</div>
-                                <Grid>
-                                    <div style={{marginTop: 12.5, marginBottom: 12.5}}>
 
-                                        <FacebookLogin
-                                            appId="622709767918813"
-                                            autoLoad={true}
-                                            fields="id,name,email,picture,cover,first_name,last_name,age_range,link,gender,locale,timezone,updated_time,verified"
-                                            scope="public_profile,user_friends"
-                                            icon="icon-fontello-facebook"
-                                            textButton=""
-                                            callback={this.responseFacebook}
-                                            cssClass="btn-darkblue btn-lg btn-default btn-social-network"
-                                        />
+                            <OauthSocialNetworkComponent/>
 
-                                        <GoogleLogin
-                                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                                            buttonText=""
-                                            className="btn-danger btn-lg btn-default btn-social-network"
-                                            onSuccess={this.responseGoogle}
-                                            onFailure={this.responseGoogle}
-                                        >
-                                            <Icon glyph='icon-fontello-google' />
-                                        </GoogleLogin>
-
-
-
-                                        <Button id='twitter-btn' bsStyle='blue' type='submit' onClick={::this.back}>
-                                            <Icon glyph='icon-fontello-twitter' />
-                                        </Button>
-                                    </div>
-                                </Grid>
-
-                            </div>
                         </div>
                     </PanelBody>
                 </Panel>

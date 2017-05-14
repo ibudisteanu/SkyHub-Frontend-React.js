@@ -6,6 +6,8 @@ import { Link, withRouter } from 'react-router';
 import {getPath} from 'common/common-functions';
 import { AuthService } from '../../../services/REST/authentication/auth.service';
 
+import {OauthSocialNetworkComponent} from '../oauth-social-networks-form/oauth.social.networks.component';
+
 import {
     Row,
     Col,
@@ -109,18 +111,15 @@ export class LoginForm extends React.Component {
         var onSwitch = this.props.onSwitch || function (){};
 
         return (
-            <PanelContainer controls={false} >
+            <PanelContainer controls={false} style={{marginBottom:0}}>
 
                 <Panel>
                     <PanelBody style={{padding: 0}}>
                         <div className='text-center bg-darkblue fg-white'>
-                            <h3 style={{margin: 0, padding: 25}}> <strong>Login </strong>to SkyHub</h3>
+                            <h3 style={{margin: 0, padding: 20}}> <strong>Login </strong>to SkyHub</h3>
                         </div>
 
                         <div>
-                            <div className='text-center' style={{padding: 12.5}}>
-                                or use your SkyHub account
-                            </div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
                                 <Form onSubmit={::this.handleCheckLogin}>
                                     <FormGroup controlId='emailaddress' validationState={this.state.userEmailValidationStatus[0]} >
@@ -148,7 +147,7 @@ export class LoginForm extends React.Component {
                                             <Row>
                                                 <Col xs={6} collapseLeft collapseRight style={{paddingTop: 10}}>
 
-                                                    <div style={{marginTop: 25}}>
+                                                    <div >
                                                         <Link to={getPath(this,'register')} onClick = {onSwitch.bind(this)}> <strong> Register </strong></Link>to SkyHub
                                                     </div>
 
@@ -162,21 +161,7 @@ export class LoginForm extends React.Component {
                                 </Form>
                             </div>
 
-                            <div className='bg-hoverblue fg-black50 text-center' style={{padding: 12.5}}>
-                                <div>You need to sign in for those awesome features</div>
-                                <div style={{marginTop: 12.5, marginBottom: 12.5}}>
-                                    <Button id='facebook-btn' bsStyle='darkblue' type='submit' onClick={::this.back}>
-                                        <Icon glyph='icon-fontello-facebook' />
-                                    </Button>
-                                    <Button id='google-btn' bsStyle='danger' type='submit' onClick={::this.back}>
-                                        <Icon glyph='icon-fontello-google' />
-                                    </Button>
-                                    <Button id='twitter-btn' bsStyle='blue' type='submit' onClick={::this.back}>
-                                        <Icon glyph='icon-fontello-twitter' />
-                                    </Button>
-                                </div>
-
-                            </div>
+                            <OauthSocialNetworkComponent/>
 
                         </div>
                     </PanelBody>
