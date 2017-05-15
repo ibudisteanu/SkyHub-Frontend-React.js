@@ -34,7 +34,6 @@ class Brand extends React.Component {
 @connect(state => ({
     userAuthenticated : state.userAuthenticated,
 }))
-
 export default class Header extends React.Component {
 
   renderNavigationAuthenticated(){

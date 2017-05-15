@@ -22,7 +22,7 @@ import {
     Modal,
 } from '@sketchpixy/rubix';
 
-@withRouter
+
 @connect(
     state => ({
         userAuthenticated : state.userAuthenticated,
@@ -46,12 +46,6 @@ export class OauthSocialNetworkComponent extends React.Component {
             latitude : 0, longitude : 0,
         }
 
-    }
-
-    back(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.props.router.goBack();
     }
 
     componentDidMount() {
@@ -157,33 +151,23 @@ export class OauthSocialNetworkComponent extends React.Component {
 
                             <Grid>
 
-                                    <FacebookLogin
-                                        appId="622709767918813"
-                                        autoLoad={true}
-                                        fields="id,name,email,picture,cover,first_name,last_name,age_range,link,gender,locale,timezone,updated_time,verified"
-                                        scope="public_profile,user_friends"
-                                        icon="icon-fontello-facebook"
-                                        textButton=""
-                                        callback={::this.responseFacebook}
-                                        cssClass="btn-darkblue btn-lg btn-default btn-social-network"
-                                    />
 
-                                    <GoogleLogin
-                                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                                        buttonText=""
-                                        autoLoad={false}
-                                        className="btn-danger btn-lg btn-default btn-social-network"
-                                        onSuccess={::this.responseSuccessGoogle}
-                                        //onFailure={::this.responseFailureGoogle }
-                                        fetchBasicProfile
-                                    >
-                                        <Icon glyph='icon-fontello-google' />
-                                    </GoogleLogin>
+                                <FacebookLogin
+                                    appId="622709767918813"
+                                    autoLoad={true}
+                                    fields="id,name,email,picture,cover,first_name,last_name,age_range,link,gender,locale,timezone,updated_time,verified"
+                                    scope="public_profile,user_friends"
+                                    icon="icon-fontello-facebook"
+                                    textButton=""
+                                    callback={::this.responseFacebook}
+                                    cssClass="btn-darkblue btn-lg btn-default btn-social-network"
+                                />
 
 
-                                    <Button id='twitter-btn' bsStyle='blue' type='submit' onClick={::this.back}>
-                                        <Icon glyph='icon-fontello-twitter' />
-                                    </Button>
+
+                                <Button id='twitter-btn' bsStyle='blue' type='submit'>
+                                    <Icon glyph='icon-fontello-twitter' />
+                                </Button>
 
                             </Grid>
 

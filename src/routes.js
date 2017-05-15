@@ -16,7 +16,8 @@ import {websiteStore} from "./modules/redux/website/website-store";
 
 /* Common Components */
 
-import Sidebar from './modules/website/template/layout/left/left-sidebar/sidebar';
+import Sidebar from './modules/website/template/layout/left/left-sidebar/sidebar.component';
+import MainLayout from './modules/website/template/layout/container/main-layout.component';
 import Header from './modules/website/template/layout/header/header.component';
 import Footer from './common/footer';
 
@@ -99,17 +100,14 @@ class App extends React.Component {
             //<SocketProvider socket={SocketClient}>
             <Provider store = {websiteStore}>
                 <MainContainer {...this.props}>
+
                     <Sidebar />
+
                     <Header />
-                    <div id='body'>
-                        <Grid>
-                            <Row>
-                                <Col xs={12}>
-                                    {this.props.children}
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </div>
+
+                    <MainLayout children={this.props.children}/>
+
+
                     <Footer />
                 </MainContainer>
             </Provider>
