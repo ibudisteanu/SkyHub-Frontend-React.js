@@ -65,11 +65,7 @@ export class AuthService {
 
                 if(resData.result == "true") {
 
-                    let userLogged = new User( resData.user);
-                    this.dispatch(UserAuthenticatedActions.newUserAuthenticated(userLogged));
-
-                    CookiesService.setCookie('token', resData.token, 365*5, '/');
-                    console.log('setting cookie'+resData.token);
+                    this.loginProvidingUser(resData.user, resData.token);
                 }
 
                 resolve(resData);
@@ -78,6 +74,14 @@ export class AuthService {
 
         });
 
+    }
+
+    loginProvidingUser(userJSON, sToken){
+        let userLogged = new User( userJSON);
+        this.dispatch(UserAuthenticatedActions.newUserAuthenticated(userLogged));
+
+        CookiesService.setCookie('token', sToken, 365*5, '/');
+        console.log('setting cookie'+sToken);
     }
 
     loginTokenAsync(token){
@@ -139,7 +143,7 @@ export class AuthService {
                     console.log('Answer from Oauth', resData);
 
                     if(resData.result === "true") {
-
+                        this.loginProvidingUser(resData.user, resData.token);
                     }
 
                     resolve(resData);

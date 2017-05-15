@@ -93,6 +93,8 @@ export class OauthSocialNetworkComponent extends React.Component {
         // userID: "1899824400275208"
         // verified : true
 
+        var onSuccess = this.props.onSuccess || function (){};
+
         try{
 
             try {
@@ -120,7 +122,7 @@ export class OauthSocialNetworkComponent extends React.Component {
 
                 .then( (res) => {
 
-                console.log(res);
+                console.log("Auth Service answer ",res);
 
                 if (res.result === "true") onSuccess(res);
                 else if (res.result === "false")
