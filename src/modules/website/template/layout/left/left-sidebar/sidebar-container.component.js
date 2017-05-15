@@ -9,6 +9,7 @@ import {
 } from '@sketchpixy/rubix';
 
 import { Link, withRouter } from 'react-router';
+import {connect} from "react-redux";
 
 import {getPath} from 'common/common-functions';
 
@@ -18,8 +19,20 @@ import StatisticsComponent from '../../../../../../common/statistics';
 import TimelineComponent from '../../../../../../common/timeline';
 import NotificationsComponent from '../../../../../../common/notifications';
 
+
 @withRouter
+@connect(
+    state => ({
+        userAuthenticated : state.userAuthenticated,
+    }),
+    dispatch => ({dispatch}),
+)
 export class SidebarContainer extends React.Component {
+
+
+  getProfileName() {
+      return this.props.userAuthenticated.user.firstName + ' ' + this.props.userAuthenticated.user.lastName;
+  }
 
   render() {
     return (
@@ -28,11 +41,12 @@ export class SidebarContainer extends React.Component {
           <Grid>
             <Row className='fg-white'>
               <Col xs={4} collapseRight>
-                <img src='/imgs/app/avatars/avatar0.png' width='40' height='40' />
+                <img src={this.props.userAuthenticated.user.profilePic} width='50' height='50' style={ {marginTop: -10, marginLeft: -10}} />
               </Col>
               <Col xs={8} collapseLeft id='avatar-col'>
-                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>Anna Sanchez</div>
+                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{::this.getProfileName()}</div>
                 <div>
+                    {this.props.userAuthenticated.user.shortBio}
                   <Progress id='demo-progress' value={30} color='#ffffff'/>
                   <Link to={getPath(this,'lock')}>
                     <Icon id='demo-icon' bundle='fontello' glyph='lock-5' />

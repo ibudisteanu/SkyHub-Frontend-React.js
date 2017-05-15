@@ -58,6 +58,7 @@ export class RegistrationForm extends React.Component {
             city : '',
             country : '',
             countryCode : '',
+            timeZone : '',
             ip: '',
 
             latitude : 0, longitude : 0,
@@ -119,7 +120,7 @@ export class RegistrationForm extends React.Component {
 
 
         if (!bValidationError)
-        this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude)
+        this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
 
             .then( (res) =>{
 
@@ -129,12 +130,12 @@ export class RegistrationForm extends React.Component {
             else
             if (res.result === "false"){
 
-                if (Object.keys(res.errors.username).length !== 0 ) this.setState({userNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.username[0])]});
-                if (Object.keys(res.errors.email).length !== 0)this.setState({emailAddressValidationStatus : ["error", this.convertValidationErrorToString(res.errors.email[0])]});
-                if (Object.keys(res.errors.firstName).length !== 0) this.setState({firstNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.firstName[0])]});
-                if (Object.keys(res.errors.lastName).length  !== 0) this.setState({lastNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.lastName[0])]});
-                if (Object.keys(res.errors.country).length  !== 0) this.setState({countryValidationStatus : ["error", this.convertValidationErrorToString(res.errors.country[0])]});
-                if (Object.keys(res.errors.city).length  !== 0) this.setState({cityValidationStatus : ["error", this.convertValidationErrorToString(res.errors.city[0])]});
+                if ((typeof res.errors.username !=="undefined")&&(Object.keys(res.errors.username).length !== 0 )) this.setState({userNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.username[0])]});
+                if ((typeof res.errors.email !=="undefined")&&(Object.keys(res.errors.email).length !== 0)) this.setState({emailAddressValidationStatus : ["error", this.convertValidationErrorToString(res.errors.email[0])]});
+                if ((typeof res.errors.firstName !=="undefined")&&(Object.keys(res.errors.firstName).length !== 0)) this.setState({firstNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.firstName[0])]});
+                if ((typeof res.errors.lastName !=="undefined")&&(Object.keys(res.errors.lastName).length  !== 0)) this.setState({lastNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.lastName[0])]});
+                if ((typeof res.errors.country !=="undefined")&&(Object.keys(res.errors.country).length  !== 0)) this.setState({countryValidationStatus : ["error", this.convertValidationErrorToString(res.errors.country[0])]});
+                if ((typeof res.errors.city !=="undefined")&&(Object.keys(res.errors.city).length  !== 0)) this.setState({cityValidationStatus : ["error", this.convertValidationErrorToString(res.errors.city[0])]});
 
                 onError(res);
             }
@@ -150,12 +151,13 @@ export class RegistrationForm extends React.Component {
                 res = res.data;
 
                 this.setState({
-                    country: res.country_name,
-                    countryCode : res.country_code,
-                    city : res.city,
-                    latitude : res.latitude,
-                    longitude : res.longitude,
-                    ip : res.ip,
+                    country: res.country_name||'',
+                    countryCode : res.country_code||'',
+                    city : res.city||'',
+                    latitude : res.latitude||'',
+                    longitude : res.longitude||'',
+                    ip : res.ip||'',
+                    timeZone: res.time_zone||'',
                 });
 
                 console.log(res);
@@ -253,7 +255,7 @@ export class RegistrationForm extends React.Component {
 
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='userNameInput' validationState={this.state.userNameValidationStatus[0]}>
-                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
+                                                <InputGroup style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-user' />
                                                     </InputGroup.Addon>
@@ -266,7 +268,7 @@ export class RegistrationForm extends React.Component {
 
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='emailAddressInput' validationState={this.state.emailAddressValidationStatus[0]}>
-                                                <InputGroup bsSize='normal'>
+                                                <InputGroup >
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-mail' />
                                                     </InputGroup.Addon>
@@ -281,7 +283,7 @@ export class RegistrationForm extends React.Component {
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='firstName' validationState={this.state.firstNameValidationStatus[0]}>
-                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
+                                                <InputGroup  style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-font' />
                                                     </InputGroup.Addon>
@@ -293,7 +295,7 @@ export class RegistrationForm extends React.Component {
                                         </Col>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='lastName' validationState={this.state.lastNameValidationStatus[0]}>
-                                                <InputGroup bsSize='normal'>
+                                                <InputGroup >
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-bold' />
                                                     </InputGroup.Addon>
@@ -308,7 +310,7 @@ export class RegistrationForm extends React.Component {
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='password' validationState={this.state.passwordValidationStatus[0]}>
-                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
+                                                <InputGroup  style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-key' />
                                                     </InputGroup.Addon>
@@ -320,7 +322,7 @@ export class RegistrationForm extends React.Component {
                                         </Col>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='retypepassword' validationState={this.state.retypePasswordValidationStatus[0]}>
-                                                <InputGroup bsSize='normal'>
+                                                <InputGroup >
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-key' />
                                                     </InputGroup.Addon>
@@ -335,7 +337,7 @@ export class RegistrationForm extends React.Component {
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='country' validationState={this.state.countryValidationStatus[0]}>
-                                                <InputGroup bsSize='normal' style={{marginRight: 10}}>
+                                                <InputGroup style={{marginRight: 10}}>
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-flag-1' />
                                                     </InputGroup.Addon>
@@ -348,7 +350,7 @@ export class RegistrationForm extends React.Component {
                                         </Col>
                                         <Col xs={6} collapseLeft collapseRight >
                                             <FormGroup controlId='city' validationState={this.state.cityValidationStatus[0]}>
-                                                <InputGroup bsSize='normal'>
+                                                <InputGroup >
                                                     <InputGroup.Addon>
                                                         <Icon glyph='icon-fontello-home-1' />
                                                     </InputGroup.Addon>

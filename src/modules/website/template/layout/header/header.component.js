@@ -53,7 +53,7 @@ export default class Header extends React.Component {
       <Grid id='navbar' {...this.props}>
         <Row>
           <Col xs={12}>
-            <Navbar fixedTop fluid id='rubix-nav-header'>
+            <Navbar fixedTop fluid id='rubix-nav-header' style={ this.props.userAuthenticated.user.isLoggedIn() ?  {} : {marginLeft:0} }>
               <Row>
                 <Col xs={1} visible='xs'>
                   <SidebarBtn />

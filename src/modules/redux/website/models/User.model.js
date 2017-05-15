@@ -6,18 +6,27 @@ export class User {
     lastName;
     email;
     username;
+    gender;
 
     profilePic;
     coverPic;
 
     preferredLang;
     connected = false;
+    timeZone;
+    shortBio;
+
+    longitude;
+    latitude;
+
+    role;
 
     country;
     city;
 
     dtCreation;
     dtLastActivity;
+
 
     constructor( data: Object = {}) {
 
@@ -38,6 +47,15 @@ export class User {
         this.city = data.city || '';
         this.dtCreation = data.dtCreation || Date.now();
         this.dtLastActivity = data.dtLastActivity || Date.now();
+
+        this.gender = data.gender || '';
+
+        this.role = data.role || UserRoleEnum.NOT_REGISTERED;
+
+        this.timeZone = data.timeZone || 0;
+        this.shortBio = data.shortBio || '';
+        this.longitude = data.longitude || -666;
+        this.latitude = data.latitude || -666;
 
         console.log('User assigned');
     }

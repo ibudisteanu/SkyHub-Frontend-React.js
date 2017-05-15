@@ -91,9 +91,18 @@ export class OauthSocialNetworkComponent extends React.Component {
 
         try{
 
+            var sFacebookId = response.id || '';
+
             try {
-                var sCoverImage = response.cover.source || '';
-                var sProfilePic = response.profile || '';
+                var objCover = response.cover || {};
+                var sCoverImage = objCover.source || '';
+
+                var sProfilePic = "http://graph.facebook.com/"+sFacebookId+"/picture?type=large";
+
+                // var objProfile = response.picture || {};
+                //     objProfile = objProfile.data || {};
+                //
+                // var sProfilePic = objProfile.url || '';
             } catch (Exception)
             {
                 console.log('Error extracting CoverImage and Profile Pic');
@@ -104,15 +113,15 @@ export class OauthSocialNetworkComponent extends React.Component {
             var sFirstName = response.first_name || '';
             var sLastName = response.last_name || '';
             var sGender = response.gender || '';
-            var sFacebookId = response.id || '';
             var iAge = response.age_range.min || 0;
-            var iTimeZone = response.timezone || 0;
+            var iTimeZone = response.time_zone || 0;
             var sLanguage = response.locale;
+            var sShortBio = response.user_about_me || '';
             var bVerified = response.verified;
 
 
             this.AuthService.registerOAuthAsync('facebook',sFacebookId,  sAccessToken, sEmail, sFirstName, sLastName, sProfilePic, sCoverImage,
-                    this.state.countryCode, sLanguage, this.state.city, this.state.latitude, this.state.longitude, sGender, iAge, iTimeZone, bVerified)
+                    this.state.countryCode, sLanguage, this.state.city, this.state.latitude, this.state.longitude, sShortBio, iAge, sGender, iTimeZone, bVerified)
 
                 .then( (res) => {
 
@@ -154,9 +163,9 @@ export class OauthSocialNetworkComponent extends React.Component {
 
                                 <FacebookLogin
                                     appId="622709767918813"
-                                    autoLoad={true}
+                                    autoLoad={false}
                                     fields="id,name,email,picture,cover,first_name,last_name,age_range,link,gender,locale,timezone,updated_time,verified"
-                                    scope="public_profile,user_friends"
+                                    scope="public_profile,user_friends,user_about_me"
                                     icon="icon-fontello-facebook"
                                     textButton=""
                                     callback={::this.responseFacebook}
