@@ -1,17 +1,17 @@
 {
-  "name": "demo",
-  "description": "Rubix - ReactJS Admin Template",
+  "name": "SkyHub-React.js",
+  "description": "SkyHub - ReactJS Front-end",
   "authors": [
-    "Sketchpixy <support@sketchpixy.com>"
+    "BIT TECHNOLOGIES RO <contact@bit-technologies.net>"
   ],
-  "copyright": "SketchPixy LLP, email: support@sketchpixy.com",
+  "copyright": "BIT TECHNOLOGIES RO LLC",
   "keywords": [
     "rubix",
     "admin",
     "sketchpixy",
     "reactjs"
   ],
-  "homepage": "http://rubix400.sketchpixy.com",
+  "homepage": "http://skyhub.me",
   "private": true,
   "ignore": [
     "**/.*",

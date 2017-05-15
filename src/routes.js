@@ -16,7 +16,7 @@ import {websiteStore} from "./modules/redux/website/website-store";
 
 /* Common Components */
 
-import Sidebar from './common/sidebar';
+import Sidebar from './modules/website/template/layout/left/left-sidebar/sidebar';
 import Header from './modules/website/template/layout/header/header.component';
 import Footer from './common/footer';
 

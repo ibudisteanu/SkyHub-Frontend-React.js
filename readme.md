@@ -3,9 +3,10 @@
 ## Installation
 
 1. Install Node.js : https://nodejs.org/en/download/
-2. gitclone repository https://github.com/ibudisteanu/SkyHub-Frontend-React.js.git . You can also install and clone using Git Windows
+2. gitclone repository https://github.com/ibudisteanu/SkyHub-Frontend-React.js.git . You can also install and clone using **Git Desktop**
 
-3. cd location\clone_repository\
+3. Open Command Prompt/Terminal and    
+    1.    **cd** location\clone_repository\
 4. npm install
 
 ## Running SkyHub Frontend
