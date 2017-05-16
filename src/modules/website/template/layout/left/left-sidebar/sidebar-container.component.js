@@ -31,7 +31,15 @@ export class SidebarContainer extends React.Component {
 
 
   getProfileName() {
-      return this.props.userAuthenticated.user.firstName + ' ' + this.props.userAuthenticated.user.lastName;
+    var result = this.props.userAuthenticated.user.firstName;
+    if (result.length +1+ this.props.userAuthenticated.user.lastName.length <= "Alexandru Ionut Bu".length)
+      result += " "+this.props.userAuthenticated.user.lastName;
+
+    return result;
+  }
+
+  getProfileShortBio(){
+    return this.props.userAuthenticated.user.shortBio.substring(1, 40)||"CEO of SkyHub";
   }
 
   render() {
@@ -44,13 +52,10 @@ export class SidebarContainer extends React.Component {
                 <img src={this.props.userAuthenticated.user.profilePic} width='50' height='50' style={ {marginTop: -10, marginLeft: -10}} />
               </Col>
               <Col xs={8} collapseLeft id='avatar-col'>
-                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{::this.getProfileName()}</div>
-                <div>
-                    {this.props.userAuthenticated.user.shortBio}
-                  <Progress id='demo-progress' value={30} color='#ffffff'/>
-                  <Link to={getPath(this,'lock')}>
-                    <Icon id='demo-icon' bundle='fontello' glyph='lock-5' />
-                  </Link>
+                <div className="sidebarUserName">{::this.getProfileName()}</div>
+                <div className="sidebarUserShortBio">
+                    {::this.getProfileShortBio()}
+
                 </div>
               </Col>
             </Row>

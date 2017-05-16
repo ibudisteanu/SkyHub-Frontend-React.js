@@ -17,13 +17,15 @@ import {websiteStore} from "./modules/redux/website/website-store";
 /* Common Components */
 
 import Sidebar from './modules/website/template/layout/left/left-sidebar/sidebar.component';
-import MainLayout from './modules/website/template/layout/container/main-layout.component';
+import MainContainerLayout from './modules/website/template/layout/container/main-container-layout.component';
+import MainContainerFullWidthLayout from './modules/website/template/layout/container/main-container-full-width-layout.component';
 import Header from './modules/website/template/layout/header/header.component';
 import Footer from './common/footer';
 
 /* Pages */
 
-import Homepage from './routes/Homepage';
+import Homepage2 from './modules/website/pages/Homepage2';
+import Homepage from './modules/website/pages/Homepage';
 
 import Dashboard from './routes/Dashboard';
 
@@ -89,8 +91,6 @@ import Pricing from './routes/Pricing';
 
 import Lock from './routes/Lock';
 
-import WebsiteIndex from './modules/website/pages/Website-index.component';
-
 import SocketClient from './modules/services/REST/socket/socket.service';
 
 
@@ -105,7 +105,7 @@ class App extends React.Component {
 
                     <Header />
 
-                    <MainLayout children={this.props.children}/>
+                    <MainContainerLayout children={this.props.children}/>
 
 
                     <Footer />
@@ -122,9 +122,12 @@ class AppSimplePage extends React.Component {
             //<SocketProvider socket={SocketClient}>
             <Provider store = {websiteStore}>
                 <MainContainer  {...this.props} >
+
+                    <Sidebar />
+
                     <Header />
 
-                    {this.props.children}
+                    <MainContainerFullWidthLayout children={this.props.children}/>
 
                 </MainContainer >
             </Provider>
@@ -140,7 +143,6 @@ class AppSimplePage extends React.Component {
 const routes = (
 
   <Route component={App}>
-    <Route path='index2' component={WebsiteIndex} />
 
     <Route path='dashboard' component={Dashboard} />
     <Route path='mailbox/inbox' component={Inbox} />
@@ -193,6 +195,10 @@ const routes = (
  */
 const basicRoutes = (
   <Route component={AppSimplePage}>
+
+    <Route path='/' component={Homepage} />
+    <Route path='homepage2' component={Homepage2} />
+
     <Route path='lock' component={Lock} />
     <Route path='login' component={LoginPage} />
     <Route path='registration' component={RegistrationPage} />
@@ -215,7 +221,7 @@ export default (
     //<SocketProvider socket={SocketClient.socket}>
         <Provider store = {websiteStore} >
           <Route>
-            <Route path='/' component={Homepage} />
+
 
             <Route path='/ltr'>
               {combinedRoutes}

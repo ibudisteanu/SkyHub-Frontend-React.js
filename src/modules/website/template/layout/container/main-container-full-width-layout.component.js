@@ -16,19 +16,24 @@ import { Grid, Row, Col} from '@sketchpixy/rubix';
     }),
     dispatch => ({dispatch}),
 )
-export default class MainLayout extends React.Component {
+export default class MainContainerFullWidthLayout extends React.Component {
 
+    getStyle(){
+        var obj = {paddingTop:0};
+        if (!this.props.userAuthenticated.user.isLoggedIn())
+            obj.marginLeft = 0;
+
+        return obj;
+    }
+
+    getStyle2(){
+        return 'paddingTop: 0px; ' + (!this.props.userAuthenticated.user.isLoggedIn() ? 'marginLeft: 0px;' : '');
+    }
 
     render() {
         return (
             <div id='body' style={ this.props.userAuthenticated.user.isLoggedIn() ?  {} : {marginLeft:0} }>
-                <Grid>
-                    <Row>
-                        <Col xs={12}>
-                            {this.props.children}
-                        </Col>
-                    </Row>
-                </Grid>
+                {this.props.children}
             </div>
         );
     }

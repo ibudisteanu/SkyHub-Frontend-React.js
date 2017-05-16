@@ -136,10 +136,15 @@ export class OauthSocialNetworkComponent extends React.Component {
         } catch (Exception)
         {
             console.log('error facebook registering');
+            this.errorRegisteringFacebook(response);
         }
 
         console.log(response);
 
+    }
+
+    errorRegisteringFacebook (response){
+        vex.dialog.alert('Error registering with Facebook');
     }
 
     responseSuccessGoogle (response){

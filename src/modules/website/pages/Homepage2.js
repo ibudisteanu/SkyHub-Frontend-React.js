@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { withRouter } from 'react-router';
-import classNames from 'classnames';
+
+import {Hero,HeroHeader, HeroHeader2 } from '../template/components/hero.component';
 
 import {
   Row,
@@ -14,46 +15,10 @@ import {
   NavItem,
 } from '@sketchpixy/rubix';
 
-class Hero extends React.Component {
-  render() {
-    return (
-      <div {...this.props}
-           className={classNames(this.props.className,
-                                 'homepage-hero')}>
-        <Grid fixed>
-          {this.props.children}
-        </Grid>
-      </div>
-    );
-  }
-}
 
-class HeroHeader extends React.Component {
-  render() {
-    return (
-      <div {...this.props}
-           className={classNames(this.props.className,
-                                 'homepage-hero-header')}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
-class HeroHeader2 extends React.Component {
-  render() {
-    return (
-      <div {...this.props}
-           className={classNames(this.props.className,
-                                 'homepage-hero-header2')}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
 
 @withRouter
-export default class Homepage extends React.Component {
+export default class Homepage2 extends React.Component {
   handleNavigation() {
     this.props.router.push('/ltr/dashboard');
   }
