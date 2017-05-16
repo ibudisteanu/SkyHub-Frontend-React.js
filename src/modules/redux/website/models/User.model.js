@@ -1,3 +1,6 @@
+import * as UserProperties from './User.properties';
+//var UserProperties = require ('./User.properties.ts');
+
 export class User {
 
     loggedIn = false;
@@ -50,7 +53,7 @@ export class User {
 
         this.gender = data.gender || '';
 
-        this.role = data.role || UserRoleEnum.NOT_REGISTERED;
+        this.role = data.role || UserProperties.UserRolesEnum.NOT_REGISTERED;
 
         this.timeZone = data.timeZone || 0;
         this.shortBio = data.shortBio || '';
