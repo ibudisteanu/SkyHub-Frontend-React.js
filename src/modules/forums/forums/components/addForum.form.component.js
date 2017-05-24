@@ -57,7 +57,7 @@ export class AddForumForm extends React.Component {
             title : '',
             description : '',
             keywords : [],
-            countryCode : '', coutry : '',
+            countryCode : '', country : '',
             city : '',
             language : '',
             latitude : 0, longitude : 0,
@@ -66,6 +66,7 @@ export class AddForumForm extends React.Component {
             descriptionValidationStatus : [null, ''],
             keywordsValidationStatus : [null, ''],
             countryValidationStatus : [null, ''],
+            cityValidationStatus : [null, ''],
             languageValidationStatus : [null, ''],
         }
 
@@ -84,8 +85,7 @@ export class AddForumForm extends React.Component {
         var onSuccess = this.props.onSuccess || function (){};
         var onError = this.props.onError || function (){};
 
-        console.log(this.state.userName, this.state.emailAddress, this.state.firstName, this.state.lastName, this.state.password, this.state.retypePassword, this.state.latitude, this.state.longitude, this.state.city, this.state.country, this.state.ip);
-
+        /*
         var userNameValidationStatus = [null, ''],  emailAddressValidationStatus = [null, ''],  firstNameValidationStatus = [null, ''], lastNameValidationStatus = [null, ''], passwordValidationStatus = [null,  ''],
             retypePasswordValidationStatus = [null,  ''], countryValidationStatus = [null,  ''],  cityValidationStatus = [null,  ''];
 
@@ -132,6 +132,7 @@ export class AddForumForm extends React.Component {
 
                 });
 
+        */
     }
 
     componentDidMount() {
@@ -154,45 +155,17 @@ export class AddForumForm extends React.Component {
         });
     }
 
-    handleUserNameChange(e){
+    handleTitleChange(e){
         this.setState({
-            userName : e.target.value,
-            userNameValidationStatus  : [null, '']
+            title : e.target.value,
+            titleValidationStatus  : [null, '']
         });
     }
 
-    handleEmailAddressChange(e){
+    handleDescriptionChange(e){
         this.setState({
-            emailAddress : e.target.value,
-            emailAddressValidationStatus  : [null, '']
-        });
-    }
-
-    handleFirstNameChange(e){
-        this.setState({
-            firstName : e.target.value,
-            firstNameValidationStatus  : [null, '']
-        });
-    }
-
-    handleLastNameChange(e){
-        this.setState({
-            lastName : e.target.value,
-            lastNameValidationStatus  : [null, '']
-        });
-    }
-
-    handlePasswordChange(e){
-        this.setState({
-            password : e.target.value,
-            passwordValidationStatus  : [null, '']
-        });
-    }
-
-    handleRetypePasswordChange(e){
-        this.setState({
-            retypePassword : e.target.value,
-            retypePasswordValidationStatus  : [null, '']
+            description : e.target.value,
+            descriptionValidationStatus  : [null, '']
         });
     }
 
@@ -220,12 +193,12 @@ export class AddForumForm extends React.Component {
         var onSwitch = this.props.onSwitch || function (){};
 
         return (
-            <PanelContainer controls={false} style={{marginBottom:0}}>
+            <PanelContainer controls={false} style={{marginBottom:20, marginTop:20}}>
 
                 <Panel>
                     <PanelBody style={{padding: 0}}>
-                        <div className='text-center bg-darkblue fg-white'>
-                            <h3 style={{margin: 0, padding: 20}}> <strong>Sign up</strong> to SkyHub </h3>
+                        <div className='text-center'>
+                            <h3 style={{margin: 0, padding: 20}}> Create a  <strong>Forum</strong> </h3>
                         </div>
                         <div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
@@ -233,88 +206,28 @@ export class AddForumForm extends React.Component {
 
                                 <Form onSubmit={::this.handleCheckRegister}>
 
-                                    <Row>
+                                    <FormGroup controlId='titleInput' validationState={this.state.titleValidationStatus[0]}>
+                                        <InputGroup style={{marginRight: 10}}>
+                                            <InputGroup.Addon>
+                                                <Icon glyph='icon-fontello-pen' />
+                                            </InputGroup.Addon>
+                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='title' value={this.state.title} onChange={::this.handleTitleChange} />
+                                            <FormControl.Feedback />
+                                        </InputGroup>
+                                        <HelpBlock>{this.state.titleValidationStatus[1]}</HelpBlock>
+                                    </FormGroup>
 
-                                        <Col xs={6} collapseLeft collapseRight >
-                                            <FormGroup controlId='userNameInput' validationState={this.state.userNameValidationStatus[0]}>
-                                                <InputGroup style={{marginRight: 10}}>
-                                                    <InputGroup.Addon>
-                                                        <Icon glyph='icon-fontello-user' />
-                                                    </InputGroup.Addon>
-                                                    <FormControl autoFocus type='text' className='border-focus-blue' placeholder='username' value={this.state.userName} onChange={::this.handleUserNameChange} />
-                                                    <FormControl.Feedback />
-                                                </InputGroup>
-                                                <HelpBlock>{this.state.userNameValidationStatus[1]}</HelpBlock>
-                                            </FormGroup>
-                                        </Col>
+                                    <FormGroup controlId='descriptionInput' validationState={this.state.descriptionValidationStatus[0]}>
+                                        <InputGroup >
+                                            <InputGroup.Addon>
+                                                <Icon glyph='icon-fontello-mail' />
+                                            </InputGroup.Addon>
+                                            <FormControl type='text'  className='border-focus-blue' placeholder='description' value={this.state.description} onChange={::this.handleDescriptionChange} />
+                                            <FormControl.Feedback />
+                                        </InputGroup>
+                                        <HelpBlock>{this.state.descriptionValidationStatus[1]}</HelpBlock>
+                                    </FormGroup>
 
-                                        <Col xs={6} collapseLeft collapseRight >
-                                            <FormGroup controlId='emailAddressInput' validationState={this.state.emailAddressValidationStatus[0]}>
-                                                <InputGroup >
-                                                    <InputGroup.Addon>
-                                                        <Icon glyph='icon-fontello-mail' />
-                                                    </InputGroup.Addon>
-                                                    <FormControl type='email' className='border-focus-blue' placeholder='John@gmail.com' value={this.state.emailAddress} onChange={::this.handleEmailAddressChange} />
-                                                    <FormControl.Feedback />
-                                                </InputGroup>
-                                                <HelpBlock>{this.state.emailAddressValidationStatus[1]}</HelpBlock>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-
-                                    <Row>
-                                        <Col xs={6} collapseLeft collapseRight >
-                                            <FormGroup controlId='firstName' validationState={this.state.firstNameValidationStatus[0]}>
-                                                <InputGroup  style={{marginRight: 10}}>
-                                                    <InputGroup.Addon>
-                                                        <Icon glyph='icon-fontello-font' />
-                                                    </InputGroup.Addon>
-                                                    <FormControl type='text' className='border-focus-blue' placeholder='First Name'  value={this.state.firstName} onChange={::this.handleFirstNameChange} />
-                                                    <FormControl.Feedback />
-                                                </InputGroup>
-                                                <HelpBlock>{this.state.firstNameValidationStatus[1]}</HelpBlock>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col xs={6} collapseLeft collapseRight >
-                                            <FormGroup controlId='lastName' validationState={this.state.lastNameValidationStatus[0]}>
-                                                <InputGroup >
-                                                    <InputGroup.Addon>
-                                                        <Icon glyph='icon-fontello-bold' />
-                                                    </InputGroup.Addon>
-                                                    <FormControl type='text' className='border-focus-blue' placeholder='Last Name'  value={this.state.lastName} onChange={::this.handleLastNameChange} />
-                                                    <FormControl.Feedback />
-                                                </InputGroup>
-                                                <HelpBlock>{this.state.lastNameValidationStatus[1]}</HelpBlock>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-
-                                    <Row>
-                                        <Col xs={6} collapseLeft collapseRight >
-                                            <FormGroup controlId='password' validationState={this.state.passwordValidationStatus[0]}>
-                                                <InputGroup  style={{marginRight: 10}}>
-                                                    <InputGroup.Addon>
-                                                        <Icon glyph='icon-fontello-key' />
-                                                    </InputGroup.Addon>
-                                                    <FormControl type='password' className='border-focus-blue' placeholder='password'  value={this.state.password} onChange={::this.handlePasswordChange} />
-                                                    <FormControl.Feedback />
-                                                </InputGroup>
-                                                <HelpBlock>{this.state.passwordValidationStatus[1]}</HelpBlock>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col xs={6} collapseLeft collapseRight >
-                                            <FormGroup controlId='retypepassword' validationState={this.state.retypePasswordValidationStatus[0]}>
-                                                <InputGroup >
-                                                    <InputGroup.Addon>
-                                                        <Icon glyph='icon-fontello-key' />
-                                                    </InputGroup.Addon>
-                                                    <FormControl type='password' className='border-focus-blue' placeholder='password'  value={this.state.retypePassword} onChange={::this.handleRetypePasswordChange} />
-                                                    <FormControl.Feedback />
-                                                </InputGroup>
-                                                <HelpBlock>{this.state.retypePasswordValidationStatus[1]}</HelpBlock>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
 
                                     <Row>
                                         <Col xs={6} collapseLeft collapseRight >
