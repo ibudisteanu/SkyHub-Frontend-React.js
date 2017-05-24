@@ -10,7 +10,7 @@ import { Link, withRouter } from 'react-router';
 import axios from 'axios';
 
 import {getPath} from 'common/common-functions';
-import { AuthService } from '../../../services/REST/authentication/auth.service';
+import { AuthService } from 'modules/services/REST/authentication/auth.service';
 
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';

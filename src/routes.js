@@ -12,7 +12,7 @@ import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
  */
 
 
-import {websiteStore} from "./modules/redux/website/website-store";
+import {websiteStore} from "./redux/website/website-store";
 
 /* Common Components */
 

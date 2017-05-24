@@ -4,7 +4,7 @@ import { Observable, Subscribable } from 'rxjs/Observable';
 
 import {CookiesService} from '../../cookies/cookies.service';
 
-import * as SocketStatusActions from './../../../redux/website/actions/socketStatus-actions';
+import * as SocketStatusActions from 'redux/website/actions/socketStatus-actions';
 
 let socketServiceInstance = null;
 

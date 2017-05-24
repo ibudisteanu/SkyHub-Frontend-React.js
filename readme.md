@@ -26,6 +26,10 @@ It will start on port 8080, and you can access the frontend server by http://127
 2. myskyhub.ddns.net:3000 for Express Backend with Redis Database
 
 
+##### intellij WebStorm
+
+The "src" folder must be set as Resource Root. To do this Settings->Directories where you Set Directories "src" folder as "Resource Root"
+
 ##### Working components
 
 1. Login

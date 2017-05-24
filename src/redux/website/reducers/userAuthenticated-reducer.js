@@ -1,4 +1,4 @@
-import {User} from './../models/User.model';
+import {User} from '../models/User.model';
 
 export const defaultUserState = {
     user: new User(),

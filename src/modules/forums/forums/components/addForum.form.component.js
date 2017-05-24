@@ -1,4 +1,9 @@
 /**
+ * Created by Alexandru Ionut Budisteanu - SkyHub on 5/16/2017.
+ * (C) BIT TECHNOLOGIES
+ */
+
+/**
  * Created by Alexandru Ionut Budisteanu - SkyHub
  * (C) BIT TECHNOLOGIES
  */
@@ -16,8 +21,6 @@ import { AuthService } from 'modules/services/REST/authentication/auth.service';
 import Select from 'react-select';
 
 import CountrySelect from "react-country-select";
-
-import {OauthSocialNetworkComponent} from '../oauth-social-networks-form/oauth.social.networks.component';
 
 import {
     Row,
@@ -42,7 +45,7 @@ import {
     }),
     dispatch => ({dispatch}),
 )
-export class RegistrationForm extends React.Component {
+export class AddForumForm extends React.Component {
 
     constructor(props){
         super(props);
@@ -51,40 +54,27 @@ export class RegistrationForm extends React.Component {
 
         this.state = {
 
-            userName : '',
-            emailAddress : '',
-            password : '',
-            retypePassword : '',
+            title : '',
+            description : '',
+            keywords : [],
+            countryCode : '', coutry : '',
             city : '',
-            country : '',
-            countryCode : '',
-            timeZone : '',
-            ip: '',
-
+            language : '',
             latitude : 0, longitude : 0,
 
-            userNameValidationStatus : [null, ''],
-            emailAddressValidationStatus : [null, ''],
-            firstNameValidationStatus : [null, ''],
-            lastNameValidationStatus : [null, ''],
-            passwordValidationStatus : [null,  ''],
-            retypePasswordValidationStatus : [null,  ''],
-            countryValidationStatus : [null,   ''],
-            cityValidationStatus : [null,  ''],
+            titleValidationStatus : [null, ''],
+            descriptionValidationStatus : [null, ''],
+            keywordsValidationStatus : [null, ''],
+            countryValidationStatus : [null, ''],
+            languageValidationStatus : [null, ''],
         }
 
-    }
-
-    back(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.props.router.goBack();
     }
 
     convertValidationErrorToString(error) {
         if (error === "notUnique") return "Already exists in the Database";
         else
-            if (error === "notEmpty") return "It's empty"
+        if (error === "notEmpty") return "It's empty"
     }
 
     handleCheckRegister(e){
@@ -120,27 +110,27 @@ export class RegistrationForm extends React.Component {
 
 
         if (!bValidationError)
-        this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
+            this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
 
-            .then( (res) =>{
+                .then( (res) =>{
 
-            console.log(res);
+                    console.log(res);
 
-            if (res.result === "true") onSuccess(res);
-            else
-            if (res.result === "false"){
+                    if (res.result === "true") onSuccess(res);
+                    else
+                    if (res.result === "false"){
 
-                if ((typeof res.errors.username !=="undefined")&&(Object.keys(res.errors.username).length !== 0 )) this.setState({userNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.username[0])]});
-                if ((typeof res.errors.email !=="undefined")&&(Object.keys(res.errors.email).length !== 0)) this.setState({emailAddressValidationStatus : ["error", this.convertValidationErrorToString(res.errors.email[0])]});
-                if ((typeof res.errors.firstName !=="undefined")&&(Object.keys(res.errors.firstName).length !== 0)) this.setState({firstNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.firstName[0])]});
-                if ((typeof res.errors.lastName !=="undefined")&&(Object.keys(res.errors.lastName).length  !== 0)) this.setState({lastNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.lastName[0])]});
-                if ((typeof res.errors.country !=="undefined")&&(Object.keys(res.errors.country).length  !== 0)) this.setState({countryValidationStatus : ["error", this.convertValidationErrorToString(res.errors.country[0])]});
-                if ((typeof res.errors.city !=="undefined")&&(Object.keys(res.errors.city).length  !== 0)) this.setState({cityValidationStatus : ["error", this.convertValidationErrorToString(res.errors.city[0])]});
+                        if ((typeof res.errors.username !=="undefined")&&(Object.keys(res.errors.username).length !== 0 )) this.setState({userNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.username[0])]});
+                        if ((typeof res.errors.email !=="undefined")&&(Object.keys(res.errors.email).length !== 0)) this.setState({emailAddressValidationStatus : ["error", this.convertValidationErrorToString(res.errors.email[0])]});
+                        if ((typeof res.errors.firstName !=="undefined")&&(Object.keys(res.errors.firstName).length !== 0)) this.setState({firstNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.firstName[0])]});
+                        if ((typeof res.errors.lastName !=="undefined")&&(Object.keys(res.errors.lastName).length  !== 0)) this.setState({lastNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.lastName[0])]});
+                        if ((typeof res.errors.country !=="undefined")&&(Object.keys(res.errors.country).length  !== 0)) this.setState({countryValidationStatus : ["error", this.convertValidationErrorToString(res.errors.country[0])]});
+                        if ((typeof res.errors.city !=="undefined")&&(Object.keys(res.errors.city).length  !== 0)) this.setState({cityValidationStatus : ["error", this.convertValidationErrorToString(res.errors.city[0])]});
 
-                onError(res);
-            }
+                        onError(res);
+                    }
 
-        });
+                });
 
     }
 
@@ -148,20 +138,20 @@ export class RegistrationForm extends React.Component {
 
         axios.get("http://freegeoip.net/json/") .then(res => {
 
-                res = res.data;
+            res = res.data;
 
-                this.setState({
-                    country: res.country_name||'',
-                    countryCode : res.country_code||'',
-                    city : res.city||'',
-                    latitude : res.latitude||'',
-                    longitude : res.longitude||'',
-                    ip : res.ip||'',
-                    timeZone: res.time_zone||'',
-                });
-
-                console.log(res);
+            this.setState({
+                country: res.country_name||'',
+                countryCode : res.country_code||'',
+                city : res.city||'',
+                latitude : res.latitude||'',
+                longitude : res.longitude||'',
+                ip : res.ip||'',
+                timeZone: res.time_zone||'',
             });
+
+            console.log(res);
+        });
     }
 
     handleUserNameChange(e){
@@ -222,14 +212,6 @@ export class RegistrationForm extends React.Component {
             city : e.target.value,
             cityValidationStatus  : null, cityValidationStatusText : ''
         });
-    }
-
-    responseFacebook(response) {
-        console.log(response);
-    }
-
-    responseGoogle (response){
-       console.log(response);
     }
 
     render() {
@@ -380,8 +362,6 @@ export class RegistrationForm extends React.Component {
                                     </FormGroup>
                                 </Form>
                             </div>
-
-                            <OauthSocialNetworkComponent/>
 
                         </div>
                     </PanelBody>

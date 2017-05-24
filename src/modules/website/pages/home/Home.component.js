@@ -7,7 +7,8 @@ import React from 'react';
 import { Link, withRouter } from 'react-router';
 import {connect} from "react-redux";
 
-import {Hero,HeroHeader, HeroHeader2 } from '../../template/components/hero.component';
+import {Hero,HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
+import {DisplayContent} from 'modules/forums/content/displayContent.component';
 
 import {
     Row,
@@ -35,9 +36,9 @@ export class HomeComponent extends React.Component {
                         <Row>
                             <Col sm={7} collapseLeft collapseRight>
                                 <p style={{marginTop: 60}}>
-                                    Rubix is built on top of React which uses a Virtual DOM implementation for ultra-high performance and semantic markup coupled with CommonJS for composable Components.
+                                    SkyHub is a new Social Network that allows people to <strong>discover, talk and change </strong> the world together
                                 </p>
-                                <p>The result: <strong>clean and elegant code.</strong></p>
+                                <p> <strong>Register</strong> now to SkyHub</p>
                             </Col>
                             <Col sm={5} collapseLeft collapseRight>
                                 <div className='hidden-xs text-right'>
@@ -50,6 +51,10 @@ export class HomeComponent extends React.Component {
                         </Row>
                     </Grid>
                 </Hero>
+
+
+                <DisplayContent/>
+
             </div>
         );
     }

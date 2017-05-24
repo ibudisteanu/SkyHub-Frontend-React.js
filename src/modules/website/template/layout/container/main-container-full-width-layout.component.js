@@ -26,13 +26,9 @@ export default class MainContainerFullWidthLayout extends React.Component {
         return obj;
     }
 
-    getStyle2(){
-        return 'paddingTop: 0px; ' + (!this.props.userAuthenticated.user.isLoggedIn() ? 'marginLeft: 0px;' : '');
-    }
-
     render() {
         return (
-            <div id='body' style={ this.props.userAuthenticated.user.isLoggedIn() ?  {} : {marginLeft:0} }>
+            <div id='body' style={ this.getStyle() }>
                 {this.props.children}
             </div>
         );

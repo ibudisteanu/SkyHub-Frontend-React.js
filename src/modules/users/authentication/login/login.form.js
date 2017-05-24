@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
-import { AuthService } from '../../../services/REST/authentication/auth.service';
+import { AuthService } from 'modules/services/REST/authentication/auth.service';
 
 import {OauthSocialNetworkComponent} from '../oauth-social-networks-form/oauth.social.networks.component';
 

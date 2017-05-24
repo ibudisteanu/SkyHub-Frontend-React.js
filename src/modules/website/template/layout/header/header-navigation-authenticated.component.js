@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
-import { AuthService } from '../../../../services/REST/authentication/auth.service';
+import { AuthService } from 'modules/services/REST/authentication/auth.service';
 
 import {HeaderDirectNavItem} from './components/header-direct-nav-item.component';
 
