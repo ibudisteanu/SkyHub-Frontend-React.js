@@ -3,11 +3,6 @@
  * (C) BIT TECHNOLOGIES
  */
 
-/**
- * Created by Alexandru Ionut Budisteanu - SkyHub
- * (C) BIT TECHNOLOGIES
- */
-
 import React from 'react';
 import {connect} from "react-redux";
 import classNames from 'classnames';
@@ -17,6 +12,7 @@ import axios from 'axios';
 
 import {getPath} from 'common/common-functions';
 import { AuthService } from 'modules/services/REST/authentication/auth.service';
+import {KeywordsMultiselect} from 'modules/components/keywords.multiselect.component';
 
 import Select from 'react-select';
 
@@ -38,6 +34,7 @@ import {
     HelpBlock,
     FormControl,
     PanelContainer,
+    ControlLabel,
 } from '@sketchpixy/rubix';
 
 @withRouter
@@ -171,6 +168,15 @@ export class AddForumForm extends React.Component {
         });
     }
 
+    handleKeywordsSelect(value){
+        this.setState({
+            keywords : value,
+            keywordsValidationStatus  : [null, '']
+        });
+
+        console.log("KEYWORDS SELECTED: " , value );
+    }
+
     handleCountrySelect(val){
         this.setState({
             country : val.label,
@@ -199,7 +205,7 @@ export class AddForumForm extends React.Component {
 
                 <Panel>
 
-                    <PanelHeader className='bg-blue' style={{textAlign: "center"}}>
+                    <PanelHeader className='bg-green' style={{textAlign: "center"}}>
                         <Grid>
                             <Row>
                                 <Col xs={12} className='fg-white'>
@@ -218,6 +224,7 @@ export class AddForumForm extends React.Component {
 
                                 <Row>
                                     <FormGroup controlId='titleInput' validationState={this.state.titleValidationStatus[0]}>
+                                        <ControlLabel>Title</ControlLabel>
                                         <InputGroup>
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-pen' />
@@ -232,9 +239,10 @@ export class AddForumForm extends React.Component {
 
                                 <Row>
                                     <FormGroup controlId='descriptionInput' validationState={this.state.descriptionValidationStatus[0]}>
+                                        <ControlLabel>Description</ControlLabel>
                                         <InputGroup >
                                             <InputGroup.Addon>
-                                                <Icon glyph='icon-fontello-mail' />
+                                                <Icon glyph='icon-fontello-edit' />
                                             </InputGroup.Addon>
                                             <FormControl type='text'  componentClass='textarea' rows='3' className='border-focus-blue' placeholder='description' value={this.state.description} onChange={::this.handleDescriptionChange} />
                                             <FormControl.Feedback />
@@ -244,16 +252,31 @@ export class AddForumForm extends React.Component {
 
                                 </Row>
 
+                                <Row>
+                                    <FormGroup controlId='keywordsInput' validationState={this.state.keywordsValidationStatus[0]}>
+                                        <ControlLabel>Keywords</ControlLabel>
+                                        <InputGroup >
+                                            <InputGroup.Addon>
+                                                <Icon glyph='icon-fontello-tag-empty' />
+                                            </InputGroup.Addon>
+                                            <KeywordsMultiselect controlId="keywordsSelect" value={this.state.keywords}  onSelect={::this.handleKeywordsSelect} />
+                                            <FormControl.Feedback />
+                                        </InputGroup>
+                                        <HelpBlock>{this.state.keywordsValidationStatus[1]}</HelpBlock>
+                                    </FormGroup>
+
+                                </Row>
 
                                 <Row>
                                     <Col xs={6} collapseLeft collapseRight >
                                         <FormGroup controlId='country' validationState={this.state.countryValidationStatus[0]}>
+                                            <ControlLabel>Country</ControlLabel>
                                             <InputGroup style={{marginRight: 10}}>
                                                 <InputGroup.Addon>
                                                     <Icon glyph='icon-fontello-flag-1' />
                                                 </InputGroup.Addon>
 
-                                                <CountrySelect controlId="countrySelect" multi={false} flagImagePath="/../../imgs/app/flags/flags/flat/flagicons/"  ref={(input) => this.countryInput = input}  value={this.state.countryCode}  onSelect={this.handleCountrySelect} />
+                                                <CountrySelect controlId="countrySelect" multi={false} flagImagePath="/../../imgs/app/flags/flags/flat/flagicons/"  value={this.state.countryCode}  onSelect={this.handleCountrySelect} />
                                                 <FormControl.Feedback />
                                             </InputGroup>
                                             <HelpBlock>{this.state.countryValidationStatus[1]}</HelpBlock>
@@ -261,6 +284,7 @@ export class AddForumForm extends React.Component {
                                     </Col>
                                     <Col xs={6} collapseLeft collapseRight >
                                         <FormGroup controlId='city' validationState={this.state.cityValidationStatus[0]}>
+                                            <ControlLabel>City</ControlLabel>
                                             <InputGroup >
                                                 <InputGroup.Addon>
                                                     <Icon glyph='icon-fontello-home-1' />
@@ -278,7 +302,7 @@ export class AddForumForm extends React.Component {
                         </div>
                     </PanelBody>
 
-                    <PanelFooter className='bg-lightblue'>
+                    <PanelFooter className='bg-lightgreen'>
 
                         <Grid>
                             <Row>

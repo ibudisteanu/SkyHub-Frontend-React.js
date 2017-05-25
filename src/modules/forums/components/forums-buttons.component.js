@@ -83,26 +83,29 @@ export class ForumsButtons extends React.Component {
                 <ButtonToolbar>
 
                     {this.state.btnAddForum ? (
-                        <Button bsStyle='success' rounded onClick={::this.handleAddForum}>
-                            <Icon glyph='icon-fontello-users-1'/>
+                        <Button bsStyle='green' rounded onClick={::this.handleAddForum}>
+                            <Icon glyph='icon-fontello-users-1' style={{marginRight: 5}} />
+                            Forum
                         </Button>
                     ) : '' }
 
                     {this.state.btnAddTopic ? (
-                        <Button bsStyle='primary' rounded onClick={::this.handleAddTopic}>
-                            <Icon glyph='icon-fontello-pencil-1'/>
+                        <Button bsStyle='red' rounded onClick={::this.handleAddTopic}>
+                            <Icon glyph='icon-fontello-pencil-1' style={{marginRight: 5}}/>
+                            Topic
                         </Button>
                     ) : '' }
 
                     {this.state.btnAddReply ? (
-                        <Button bsStyle='info' rounded onClick={::this.handleAddTopic}>
-                            <Icon glyph='icon-fontello-chat-1'/>
+                        <Button bsStyle='blue' rounded onClick={::this.handleAddTopic}>
+                            <Icon glyph='icon-fontello-chat-1' style={{marginRight: 5}}/>
+                            Reply
                         </Button>
                     ) : '' }
 
                 </ButtonToolbar>
 
-                {this.state.showAddForumForm ? this.showAddForum() : 'NUUU MEEERGE'}
+                {this.state.showAddForumForm ? this.showAddForum() : ''}
 
             </div>
         );
