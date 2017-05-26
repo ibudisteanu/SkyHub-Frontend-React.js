@@ -6,6 +6,8 @@ import {} from 'common/common-functions.js';
 import {HomeComponent} from './home/Home.component';
 import {AuthenticatedHomeComponent} from './authenticated/Authenticated-home.component';
 
+import {DisplayContent} from 'modules/forums/content/displayContent.component';
+
 import {
 } from '@sketchpixy/rubix';
 
@@ -31,6 +33,8 @@ export default class Homepage extends React.Component {
         return (
             <div>
                 {this.props.userAuthenticated.user.isLoggedIn() ? ::this.renderAuthenticatedHome() : ::this.renderHome()}
+
+                <DisplayContent/>
 
             </div>
         );

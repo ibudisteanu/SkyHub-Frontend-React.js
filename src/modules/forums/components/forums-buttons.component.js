@@ -80,7 +80,7 @@ export class ForumsButtons extends React.Component {
         return (
             <div>
                 {console.log(this.state)}
-                <ButtonToolbar>
+                <ButtonToolbar style={{paddingTop:20}}>
 
                     {this.state.btnAddForum ? (
                         <Button bsStyle='green' rounded onClick={::this.handleAddForum}>

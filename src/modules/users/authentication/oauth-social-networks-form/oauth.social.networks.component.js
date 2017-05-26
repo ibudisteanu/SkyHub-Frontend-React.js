@@ -87,8 +87,6 @@ export class OauthSocialNetworkComponent extends React.Component {
         // userID: "1899824400275208"
         // verified : true
 
-        var onSuccess = this.props.onSuccess || function (){};
-
         try{
 
             var sFacebookId = response.id || '';
@@ -101,7 +99,6 @@ export class OauthSocialNetworkComponent extends React.Component {
 
                 // var objProfile = response.picture || {};
                 //     objProfile = objProfile.data || {};
-                //
                 // var sProfilePic = objProfile.url || '';
             } catch (Exception)
             {
@@ -127,16 +124,17 @@ export class OauthSocialNetworkComponent extends React.Component {
 
                 console.log("Auth Service answer ",res);
 
-                if (res.result === "true") onSuccess(res);
-                else if (res.result === "false")
-                    vex.dialog.alert('Error registering with facebook ');
+                if (res.result === "true") this.registrationSuccessfully(res);
+                else if (res.result === "false") {
+                    this.errorRegisteringFacebook(response);
+                }
 
             });
 
         } catch (Exception)
         {
             console.log('error facebook registering');
-            this.errorRegisteringFacebook(response);
+            this.errorRegisteringFacebook (response);
         }
 
         console.log(response);
@@ -145,6 +143,7 @@ export class OauthSocialNetworkComponent extends React.Component {
 
     errorRegisteringFacebook (response){
         vex.dialog.alert('Error registering with Facebook');
+        this.registrationFailure(response);
     }
 
     responseSuccessGoogle (response){
@@ -153,6 +152,18 @@ export class OauthSocialNetworkComponent extends React.Component {
 
     responseFailureGoogle (response){
         vex.dialog.alert('Error registering with Google');
+    }
+
+    registrationSuccessfully(response){
+        var onSuccess = this.props.onSuccess || function (){};
+
+        onSuccess(response);
+    }
+
+    registrationFailure(response){
+        var onError = this.props.onError || function (){};
+
+        onError(response);
     }
 
     render() {
@@ -177,7 +188,17 @@ export class OauthSocialNetworkComponent extends React.Component {
                                     cssClass="btn-darkblue btn-lg btn-default btn-social-network"
                                 />
 
-
+                                <GoogleLogin
+                                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                                    buttonText=""
+                                    autoLoad={false}
+                                    className="btn-danger btn-lg btn-default btn-social-network"
+                                    onSuccess={::this.responseSuccessGoogle}
+                                    //onFailure={::this.responseFailureGoogle }
+                                    fetchBasicProfile
+                                >
+                                    <Icon glyph='icon-fontello-google' />
+                                </GoogleLogin>
 
                                 <Button id='twitter-btn' bsStyle='blue' type='submit'>
                                     <Icon glyph='icon-fontello-twitter' />
@@ -189,7 +210,6 @@ export class OauthSocialNetworkComponent extends React.Component {
                     </Grid>
 
                 </div>
-
         );
     }
 }

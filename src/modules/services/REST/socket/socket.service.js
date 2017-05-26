@@ -2,8 +2,7 @@ import * as io from 'socket.io-client';
 
 import { Observable, Subscribable } from 'rxjs/Observable';
 
-import {CookiesService} from '../../cookies/cookies.service';
-
+import {CookiesService} from 'modules/services/cookies/cookies.service';
 import * as SocketStatusActions from 'redux/website/actions/socketStatus-actions';
 
 let socketServiceInstance = null;
@@ -114,12 +113,17 @@ export class SocketService {
      FUNCTIONS
      */
 
-    sendRequest(sRequestName, sRequestData) {
+    sendRequest(sRequestName, requestData) {
 
         //console.log('sending'+sRequestName); console.log(sRequestData);
 
-        if ((sRequestName !== '') || (sRequestData !== ''))
-            return this.socket.emit(this.sServerSocketApi + sRequestName, sRequestData);
+        var token = CookiesService.getTokenCookie();
+        if ((token !== "")&&(!requestData.hasOwnProperty('token'))&&(typeof requestData !== "string")) {
+            requestData.token = token;
+        }
+
+        if ((sRequestName !== '') || (requestData !== ''))
+            return this.socket.emit(this.sServerSocketApi + sRequestName, requestData);
     }
 
     /*

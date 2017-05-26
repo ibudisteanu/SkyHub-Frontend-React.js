@@ -61,16 +61,15 @@ export class LoginForm extends React.Component {
 
         e.preventDefault(); e.stopPropagation();
 
-        var onSuccess = this.props.onSuccess || function (){};
-        var onError = this.props.onError || function (){};
-
         console.log(this.state.userEmail, this.state.password);
 
         this.AuthService.loginAsync(this.state.userEmail, this.state.password).then( (res) =>{
 
             var userEmailValidationStatus = [null, ''], passwordValidationStatus = [null,''];
 
-            if (res.result === "true") onSuccess(res);
+            if (res.result === "true") {
+                this.loginSuccessfully(res);
+            }
             else
             if (res.result === "false"){
                 if (res.message === "No User Found") {
@@ -81,7 +80,7 @@ export class LoginForm extends React.Component {
                     passwordValidationStatus = ["error","Incorrect Password"];
                 }
 
-                onError(res);
+                this.loginFailure(res);
             }
 
             this.setState({
@@ -105,6 +104,19 @@ export class LoginForm extends React.Component {
             passwordValidationStatus  : [null, '']
         });
     }
+
+    loginSuccessfully(res){
+        var onSuccess = this.props.onSuccess || function (){};
+
+        onSuccess(res);
+    }
+
+    loginFailure(res){
+        var onError = this.props.onError || function (){};
+
+        onError(res);
+    }
+
 
     render() {
 
@@ -161,7 +173,7 @@ export class LoginForm extends React.Component {
                                 </Form>
                             </div>
 
-                            <OauthSocialNetworkComponent/>
+                            <OauthSocialNetworkComponent onSuccess={::this.loginSuccessfully} onError={::this.loginFailure} />
 
                         </div>
                     </PanelBody>

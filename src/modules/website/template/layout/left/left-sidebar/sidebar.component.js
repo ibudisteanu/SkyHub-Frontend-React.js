@@ -5,6 +5,8 @@ import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
 
+import {getDefaultLocalization} from 'redux/website/actions/localization-actions';
+
 import {SidebarContainer} from './sidebar-container.component';
 
 @withRouter
@@ -15,6 +17,12 @@ import {SidebarContainer} from './sidebar-container.component';
     dispatch => ({dispatch}),
 )
 export default class Sidebar extends React.Component {
+
+    constructor (props){
+        super(props);
+
+        getDefaultLocalization(props.dispatch);
+    }
 
     renderAuthenticated(){
 

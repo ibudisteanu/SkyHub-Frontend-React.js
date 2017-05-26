@@ -77,13 +77,15 @@ export class AuthenticationModal extends React.Component {
     }
 
 
-    loginSuccess(){
-
+    loginSuccess(resource){
+        var onSuccess = this.props.onSuccess||function(){};
+        onSuccess(resource);
     }
 
 
-    registrationSuccess(){
-
+    registrationSuccess(resource){
+        var onSuccess = this.props.onSuccess||function(){};
+        onSuccess(resource);
     }
 
     switchLoginToRegistration(e){

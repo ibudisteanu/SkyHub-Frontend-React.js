@@ -3,12 +3,8 @@
  * (C) BIT TECHNOLOGIES
  */
 
-/*
- TUTORIAL BASED on http://tphangout.com/angular-2-authentication/
- */
-
-import {CookiesService} from '../../cookies/cookies.service';
-import {SocketService} from '../socket/socket.service';
+import {CookiesService} from 'modules/services/cookies/cookies.service';
+import {SocketService} from 'modules/services/REST/socket/socket.service';
 
 import {User} from 'redux/website/models/User.model';
 
@@ -45,9 +41,14 @@ export class AuthService {
 
         if ((typeof window !== "undefined")&& (typeof window.document !== "undefined")){
             var token = CookiesService.getTokenCookie();
-            if (token !== ""){
+            if (token !== "")
                 this.loginTokenAsync(token);
-            }
+
+            this.SocketService.setSocketReadObservable("connect").subscribe(response => {
+                var token = CookiesService.getTokenCookie();
+                if (token !== "")
+                    this.loginTokenAsync(token);
+            });
 
             clearInterval(this.loadCookieInterval);
         }
@@ -156,6 +157,9 @@ export class AuthService {
     }
 
     logout(){
+
+        this.SocketService.sendRequest("auth/logout",{});
+
         CookiesService.deleteCookie("token");
         this.dispatch(UserAuthenticatedActions.logoutUserAuthenticated());
     }

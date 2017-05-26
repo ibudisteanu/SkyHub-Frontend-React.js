@@ -82,17 +82,16 @@ export class RegistrationForm extends React.Component {
     }
 
     convertValidationErrorToString(error) {
-        if (error === "notUnique") return "Already exists in the Database";
-        else
-            if (error === "notEmpty") return "It's empty"
+        if (error === "notUnique") return "Already exists in the Database"; else
+        if (error === "notEmpty") return "It's empty"; else
+        if (error === "validateUsername") return " Invalid username";
+
+        return error;
     }
 
     handleCheckRegister(e){
 
         e.preventDefault(); e.stopPropagation();
-
-        var onSuccess = this.props.onSuccess || function (){};
-        var onError = this.props.onError || function (){};
 
         console.log(this.state.userName, this.state.emailAddress, this.state.firstName, this.state.lastName, this.state.password, this.state.retypePassword, this.state.latitude, this.state.longitude, this.state.city, this.state.country, this.state.ip);
 
@@ -126,7 +125,9 @@ export class RegistrationForm extends React.Component {
 
             console.log(res);
 
-            if (res.result === "true") onSuccess(res);
+            if (res.result === "true") {
+                this.registrationSuccessfully(res);
+            }
             else
             if (res.result === "false"){
 
@@ -137,7 +138,7 @@ export class RegistrationForm extends React.Component {
                 if ((typeof res.errors.country !=="undefined")&&(Object.keys(res.errors.country).length  !== 0)) this.setState({countryValidationStatus : ["error", this.convertValidationErrorToString(res.errors.country[0])]});
                 if ((typeof res.errors.city !=="undefined")&&(Object.keys(res.errors.city).length  !== 0)) this.setState({cityValidationStatus : ["error", this.convertValidationErrorToString(res.errors.city[0])]});
 
-                onError(res);
+                this.registrationFailure(res);
             }
 
         });
@@ -224,12 +225,17 @@ export class RegistrationForm extends React.Component {
         });
     }
 
-    responseFacebook(response) {
-        console.log(response);
+    registrationSuccessfully(res){
+        var onSuccess = this.props.onSuccess || function (){};
+
+        onSuccess(res);
+
     }
 
-    responseGoogle (response){
-       console.log(response);
+    registrationFailure(res){
+        var onError = this.props.onError || function (){};
+
+        onError(res);
     }
 
     render() {
@@ -381,7 +387,7 @@ export class RegistrationForm extends React.Component {
                                 </Form>
                             </div>
 
-                            <OauthSocialNetworkComponent/>
+                            <OauthSocialNetworkComponent onSuccess={::this.registrationSuccessfully} onError={::this.registrationFailure} />
 
                         </div>
                     </PanelBody>

@@ -29,6 +29,7 @@ export class AuthenticatedHomeComponent extends React.Component {
         return (
             <div>
                 HELLO WORLD
+
             </div>
         );
     }

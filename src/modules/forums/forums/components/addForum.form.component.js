@@ -11,8 +11,9 @@ import { Link, withRouter } from 'react-router';
 import axios from 'axios';
 
 import {getPath} from 'common/common-functions';
-import { AuthService } from 'modules/services/REST/authentication/auth.service';
+import { ForumsService } from 'modules/services/REST/forums/forums/forums.service';
 import {KeywordsMultiselect} from 'modules/components/keywords.multiselect.component';
+import {AuthenticationModal} from "modules/users/authentication/modals/authentication.modal";
 
 import Select from 'react-select';
 
@@ -41,6 +42,7 @@ import {
 @connect(
     state => ({
         userAuthenticated : state.userAuthenticated,
+        localization :  state.localization,
     }),
     dispatch => ({dispatch}),
 )
@@ -49,7 +51,7 @@ export class AddForumForm extends React.Component {
     constructor(props){
         super(props);
 
-        this.AuthService = new AuthService(props.dispatch);
+        this.ForumsService = new ForumsService(props.dispatch);
 
         this.state = {
 
@@ -66,72 +68,78 @@ export class AddForumForm extends React.Component {
             keywordsValidationStatus : [null, ''],
             countryValidationStatus : [null, ''],
             cityValidationStatus : [null, ''],
-            languageValidationStatus : [null, ''],
         }
 
     }
 
     convertValidationErrorToString(error) {
-        if (error === "notUnique") return "Already exists in the Database";
-        else
-        if (error === "notEmpty") return "It's empty"
+        if (error === "notUnique") return "Already exists in the Database"; else
+        if (error === "notEmpty") return "It's empty";  else
+        if (error === 'validateKeywords') return "Too few keywords. Minimum 3";
+
+        return error;
     }
 
     handleAddForum(e){
 
-        e.preventDefault(); e.stopPropagation();
+        if (typeof e !== "undefined") {
+            e.preventDefault();
+            e.stopPropagation();
+        }
 
         var onSuccess = this.props.onSuccess || function (){};
         var onError = this.props.onError || function (){};
 
-        /*
-         var userNameValidationStatus = [null, ''],  emailAddressValidationStatus = [null, ''],  firstNameValidationStatus = [null, ''], lastNameValidationStatus = [null, ''], passwordValidationStatus = [null,  ''],
-         retypePasswordValidationStatus = [null,  ''], countryValidationStatus = [null,  ''],  cityValidationStatus = [null,  ''];
+        var titleValidationStatus = [null, ''], descriptionValidationStatus = [null, ''], keywordsValidationStatus = [null, ''], countryValidationStatus = [null, ''], cityValidationStatus = [null, ''];
 
-         var bValidationError = false;
+        var bValidationError=false;
+        this.setState({
+            titleValidationStatus: titleValidationStatus,
+            descriptionValidationStatus: descriptionValidationStatus,
+            keywordsValidationStatus: keywordsValidationStatus,
+            countryValidationStatus: countryValidationStatus,
+            cityValidationStatus: cityValidationStatus,
+        });
 
-         if (this.state.password.length < 4){
-         passwordValidationStatus = ["error","To weak. At least 4 characters"];
-         bValidationError = true;
-         }
-
-         if ((this.state.password !== this.state.retypePassword)&&(this.state.password !== '')){
-         retypePasswordValidationStatus = ["error","The passwords don't match"];
-         bValidationError = true;
-         }
-
-         this.setState({
-         userNameValidationStatus : userNameValidationStatus, emailAddressValidationStatus : emailAddressValidationStatus,
-         firstNameValidationStatus : firstNameValidationStatus, lastNameValidationStatus : lastNameValidationStatus,
-         passwordValidationStatus : passwordValidationStatus, retypePasswordValidationStatus : retypePasswordValidationStatus,
-         countryValidationStatus : countryValidationStatus, cityValidationStatus : cityValidationStatus,
-         });
+        console.log('ADDing forum... ');
 
 
-         if (!bValidationError)
-         this.AuthService.registerAsync(this.state.userName, this.state.emailAddress, this.state.password, this.state.firstName, this.state.lastName, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
+        if (!bValidationError)
+            this.ForumsService.forumAddAsync(this.state.title, this.state.description, this.state.keywords, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
 
-         .then( (res) =>{
+                .then((res) => {
 
-         console.log(res);
+                    console.log("ANSWER FROM adding forum",res);
 
-         if (res.result === "true") onSuccess(res);
-         else
-         if (res.result === "false"){
+                    if (res.result === "true") {
+                        onSuccess(res);
+                    }
+                    else if (res.result === "false") {
 
-         if ((typeof res.errors.username !=="undefined")&&(Object.keys(res.errors.username).length !== 0 )) this.setState({userNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.username[0])]});
-         if ((typeof res.errors.email !=="undefined")&&(Object.keys(res.errors.email).length !== 0)) this.setState({emailAddressValidationStatus : ["error", this.convertValidationErrorToString(res.errors.email[0])]});
-         if ((typeof res.errors.firstName !=="undefined")&&(Object.keys(res.errors.firstName).length !== 0)) this.setState({firstNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.firstName[0])]});
-         if ((typeof res.errors.lastName !=="undefined")&&(Object.keys(res.errors.lastName).length  !== 0)) this.setState({lastNameValidationStatus : ["error", this.convertValidationErrorToString(res.errors.lastName[0])]});
-         if ((typeof res.errors.country !=="undefined")&&(Object.keys(res.errors.country).length  !== 0)) this.setState({countryValidationStatus : ["error", this.convertValidationErrorToString(res.errors.country[0])]});
-         if ((typeof res.errors.city !=="undefined")&&(Object.keys(res.errors.city).length  !== 0)) this.setState({cityValidationStatus : ["error", this.convertValidationErrorToString(res.errors.city[0])]});
+                        if ((typeof res.errors.title !== "undefined") && (Object.keys(res.errors.title).length !== 0 )) titleValidationStatus = ["error", this.convertValidationErrorToString(res.errors.title[0])];
+                        if ((typeof res.errors.description !== "undefined") && (Object.keys(res.errors.description).length !== 0)) descriptionValidationStatus = ["error", this.convertValidationErrorToString(res.errors.description[0])];
+                        if ((typeof res.errors.keywords !== "undefined") && (Object.keys(res.errors.keywords).length !== 0)) keywordsValidationStatus = ["error", this.convertValidationErrorToString(res.errors.keywords[0])];
+                        if ((typeof res.errors.country !== "undefined") && (Object.keys(res.errors.country).length !== 0)) countryValidationStatus = ["error", this.convertValidationErrorToString(res.errors.country[0])];
+                        if ((typeof res.errors.city !== "undefined") && (Object.keys(res.errors.city).length !== 0)) cityValidationStatus = ["error", this.convertValidationErrorToString(res.errors.city[0])];
 
-         onError(res);
-         }
+                        //in case there are no other errors, except the fact that I am not logged In
+                        if ((typeof res.errors.authorId !== "undefined") && (Object.keys(res.errors.authorId).length !== 0))
+                            if ((titleValidationStatus[0] === null)&&(descriptionValidationStatus[0] === null)&&(keywordsValidationStatus[0] === null)&&(countryValidationStatus[0] === null)&&(cityValidationStatus[0] === null))
+                                this.openLogin();
 
-         });
+                        this.setState({
+                            titleValidationStatus: titleValidationStatus,
+                            descriptionValidationStatus: descriptionValidationStatus,
+                            keywordsValidationStatus: keywordsValidationStatus,
+                            countryValidationStatus: countryValidationStatus,
+                            cityValidationStatus: cityValidationStatus,
+                        });
 
-         */
+                        onError(res);
+                    }
+
+                });
+
     }
 
     componentDidMount() {
@@ -152,6 +160,19 @@ export class AddForumForm extends React.Component {
 
             console.log(res);
         });
+    }
+
+    componentWillMount(){
+        // if ((this.state.country === '')&&(this.props.localization.country||'' !== ''))
+        //     this.setState({
+        //         country: this.props.localization.country||'',
+        //         countryCode : this.props.localization.countryCode||'',
+        //         city : this.props.localization.city||'',
+        //         latitude : this.props.localization.latitude||'',
+        //         longitude : this.props.localization.longitude||'',
+        //         ip : this.props.localization.ip||'',
+        //         timeZone: this.props.localization.timeZone||'',
+        //     });
     }
 
     handleTitleChange(e){
@@ -195,13 +216,23 @@ export class AddForumForm extends React.Component {
         });
     }
 
-    render() {
+    openLogin(){
 
-        var onSuccess = this.props.onSuccess || function (){};
-        var onSwitch = this.props.onSwitch || function (){};
+        if (typeof this.authenticationModal !== "undefined")
+            this.authenticationModal.openLogin();
+    }
+
+    authenticationSuccessfully(resource){
+        this.handleAddForum();
+    }
+
+    render() {
 
         return (
             <PanelContainer controls={false} style={{marginBottom:20, marginTop:20}}>
+
+                { !this.props.userAuthenticated.user.isLoggedIn() ? (<AuthenticationModal ref={(c) => this.authenticationModal = c} onSuccess={::this.authenticationSuccessfully} />) : '' }
+
 
                 <Panel>
 

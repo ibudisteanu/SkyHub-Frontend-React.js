@@ -8,7 +8,6 @@ import { Link, withRouter } from 'react-router';
 import {connect} from "react-redux";
 
 import {Hero,HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
-import {DisplayContent} from 'modules/forums/content/displayContent.component';
 
 import {
     Row,
@@ -26,7 +25,7 @@ export class HomeComponent extends React.Component {
     render() {
         return (
             <div>
-                <Hero className='text-center hidden-xs' style={{height: 475, backgroundImage: 'url(/imgs/app/homepage/background.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
+                <Hero className='text-center' style={{height: 475, backgroundImage: 'url(/imgs/app/homepage/background.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
                     <HeroHeader style={{color:'white'}}>
                         <span>{"SkyHub Forum social network"}</span>
                         <sup><Label className='bg-deepred fg-white'>2</Label></sup>
@@ -53,7 +52,7 @@ export class HomeComponent extends React.Component {
                 </Hero>
 
 
-                <DisplayContent/>
+
 
             </div>
         );
