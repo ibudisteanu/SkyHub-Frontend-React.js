@@ -1,4 +1,4 @@
-import * as UserProperties from './User.properties';
+import * as UserProperties from './User.properties.js';
 //var UserProperties = require ('./User.properties.ts');
 
 export class User {
