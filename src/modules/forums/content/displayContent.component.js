@@ -11,6 +11,7 @@ import {getPath} from 'common/common-functions';
 import { AuthService } from 'modules/services/REST/authentication/auth.service';
 import {Hero, HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
 import {ForumsButtons} from 'modules/forums/components/forums-buttons.component';
+import {PreviewForum} from './../forums/view-forum/previewForum.component';
 
 import {
     PanelContainer,
@@ -51,6 +52,9 @@ export class DisplayContent extends React.Component {
                     <p className='text-center' style={{marginTop: 25}}>
                         Rubix 4.0 allows you to create static sites using a feature called <strong>distributables</strong>. These distributables can be deployed directly to any static server (e.g. Apache2 / Nginx etc).
                     </p>
+
+                    <PreviewForum/>
+
                 </Hero>
 
             </PanelContainer>

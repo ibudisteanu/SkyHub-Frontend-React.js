@@ -48,7 +48,23 @@ export class ForumsService {
 
         });
 
+    }
 
+    getForumAsync(sURL){
+
+        return new Promise( (resolve)=> {
+
+            //Using Promise
+            this.SocketService.sendRequestGetDataPromise("forums/get-forum",{URL: sURL})
+
+                .then( (resData ) => {
+
+                    console.log('Answer from FORUM ', resData);
+
+                    resolve(resData);
+                });
+
+        });
 
     }
 

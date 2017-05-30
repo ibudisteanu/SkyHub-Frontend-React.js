@@ -26,6 +26,7 @@ import Footer from './common/footer';
 
 import Homepage2 from './modules/website/pages/Homepage2';
 import Homepage from './modules/website/pages/Homepage';
+import ViewForum from './modules/forums/forums/view-forum/viewForum.component';
 
 import Dashboard from './routes/Dashboard';
 
@@ -116,7 +117,7 @@ class App extends React.Component {
     }
 }
 
-class AppSimplePage extends React.Component {
+class AppFullWidth extends React.Component {
     render() {
         return (
             //<SocketProvider socket={SocketClient}>
@@ -194,10 +195,12 @@ const routes = (
  * No Sidebar, Header or Footer. Only the Body is rendered.
  */
 const basicRoutes = (
-  <Route component={AppSimplePage}>
+  <Route component={AppFullWidth}>
 
     <Route path='/' component={Homepage} />
     <Route path='homepage2' component={Homepage2} />
+
+    <Route path="forum/:forumURL" component={ViewForum}/>
 
     <Route path='lock' component={Lock} />
     <Route path='login' component={LoginPage} />
@@ -222,13 +225,13 @@ export default (
         <Provider store = {websiteStore} >
           <Route>
 
-
             <Route path='/ltr'>
               {combinedRoutes}
             </Route>
             <Route path='/rtl'>
               {combinedRoutes}
             </Route>
+
           </Route>
         </Provider>
     //</SocketProvider>

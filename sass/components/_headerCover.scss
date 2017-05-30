@@ -1,0 +1,84 @@
+.btn-social-network{
+  font-size:35px;
+  margin-right: 10px;
+}
+
+
+.header-cover{
+  min-height: 350px;
+  display: inline-block;
+  width: 100%;
+
+  position: relative;
+  background-position: center;
+  background-size: cover;
+}
+
+.header-cover-layover{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.header-cover-description {
+
+  margin-top: 80px;
+
+  >div {
+
+      >img {
+        max-width: 128px;
+        max-height: 128px;
+
+
+        float: left;
+      }
+
+      >row{
+
+        display: inline;
+
+        >h1{
+          display: inline-block;
+          background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        >h4{
+          display: inline-block;
+          background-color: rgba(0, 0, 0, 0.6);
+        }
+      }
+
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 80px
+  }
+
+}
+
+.header-cover-avatar {
+
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+
+  @media (max-width: 650px) {
+
+  }
+}
+
+.header-cover-toolbar{
+
+}
+
+
+.header-cover-toolbar-label {
+  cursor: pointer;
+  display: inline-block;
+
+  >span {
+    margin-left: $line-height-computed;
+  }
+}
