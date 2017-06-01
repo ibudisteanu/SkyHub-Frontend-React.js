@@ -76,7 +76,7 @@ export class PreviewForum extends React.Component {
                 { ((this.state.forum !== null) && (this.state.forumNotFound === false))
                     ?
                     <Panel>
-                        <PanelHeader style={{backgroundColor: this.state.forum.coverColor||"#79B0EC"}}>
+                        <PanelHeader style={{backgroundColor: this.state.forum.coverColor||"#79B0EC", height: 120}}>
                             <Grid>
                                 <Row>
                                     <Col xs={12} className='fg-white'>

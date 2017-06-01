@@ -72,7 +72,6 @@ export default class ViewForum extends React.Component {
                     <span>{this.state.forum.title}</span>
                 </HeroHeader>
 
-                <DisplayContent/>
             </div>
 
         )
@@ -90,7 +89,7 @@ export default class ViewForum extends React.Component {
     render() {
 
         return (
-            <PanelContainer controls={false} style={{marginBottom:0}}>
+            <div>
 
                 { ((this.state.forum !== null) && (this.state.forumNotFound === false))
                     ?
@@ -101,16 +100,18 @@ export default class ViewForum extends React.Component {
                                  backgroundColor={this.state.forum.coverColor||''} />
                     :
                     <WebsiteHeaderCover />
-                };
+                }
 
 
                 <Hero style={{position: 'relative', zIndex: 2}}>
 
-                    {this.state.forum !== null ? ::this.renderForum(this.state.forum) : ::this.renderError()}
+                    {this.state.forum !== null ? ::this.renderForum(this.state.forum) : ::this.renderError}
 
                 </Hero>
 
-            </PanelContainer>
+                <DisplayContent/>
+
+            </div>
         )
     }
 }
