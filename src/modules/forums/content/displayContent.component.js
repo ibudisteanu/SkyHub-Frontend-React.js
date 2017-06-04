@@ -9,6 +9,7 @@ import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
 import { AuthService } from 'modules/services/REST/authentication/auth.service';
+import { ContentService } from 'modules/services/REST/forums/content/content.service';
 import {Hero, HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
 import {ForumsButtons} from 'modules/forums/components/forums-buttons.component';
 import {PreviewForum} from './../forums/view-forum/previewForum.component';
@@ -31,6 +32,21 @@ export class DisplayContent extends React.Component {
         super(props);
 
         this.AuthService = new AuthService(props.dispatch);
+        this.ContentService = new ContentService(props.dispatch);
+
+    }
+
+    componentDidMount(){
+        this.fetchTopContent();
+    }
+
+    fetchTopContent(){
+
+        this.ContentService.fetchTopContent(this.props.params.parent || this.props.parent || '').then ((answer)=>{
+
+            console.log("FEEETCHING TOP CONTENT", answer);
+
+        });
 
     }
 

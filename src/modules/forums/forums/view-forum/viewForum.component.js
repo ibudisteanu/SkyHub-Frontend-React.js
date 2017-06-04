@@ -98,7 +98,9 @@ export default class ViewForum extends React.Component {
                                  icon={this.state.forum.iconPic||""}
                                  cover={this.state.forum.coverPic||''}
                                  backgroundColor={this.state.forum.coverColor||''} />
+
                     :
+
                     <WebsiteHeaderCover />
                 }
 

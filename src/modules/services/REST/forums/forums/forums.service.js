@@ -26,13 +26,13 @@ export class ForumsService {
         return forumServiceInstance;
     }
 
-    forumAddAsync(sTitle, sDescription, arrKeywords, sCountryCode, sLanguage, sCity, latitude, longitude, iTimeZone)
+    forumAddAsync(sParentId, sTitle, sDescription,  arrKeywords, sCountryCode, sLanguage, sCity, latitude, longitude, iTimeZone)
     {
 
         return new Promise( (resolve)=> {
 
             //Using Promise
-            this.SocketService.sendRequestGetDataPromise("forums/add-forum",{title: sTitle, description: sDescription, keywords : arrKeywords,
+            this.SocketService.sendRequestGetDataPromise("forums/add-forum",{parent : sParentId, title: sTitle, description: sDescription, keywords : arrKeywords,
                 country: sCountryCode, language:sLanguage, city : sCity, latitude: latitude, longitude : longitude,  timeZone: iTimeZone})
 
                 .then( (resData ) => {

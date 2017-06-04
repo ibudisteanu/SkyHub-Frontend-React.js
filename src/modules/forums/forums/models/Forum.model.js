@@ -10,7 +10,7 @@ export class Forum {
 
     iconPic;
     coverPic;
-    coverColor;-
+    coverColor;
 
     preferredLang;
 

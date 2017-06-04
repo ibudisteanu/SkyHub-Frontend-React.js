@@ -63,6 +63,9 @@ export class AddForumForm extends React.Component {
             language : '',
             latitude : 0, longitude : 0,
 
+            parentName : '',
+            parentId : '',
+
             titleValidationStatus : [null, ''],
             descriptionValidationStatus : [null, ''],
             keywordsValidationStatus : [null, ''],
@@ -105,7 +108,7 @@ export class AddForumForm extends React.Component {
 
 
         if (!bValidationError)
-            this.ForumsService.forumAddAsync(this.state.title, this.state.description, this.state.keywords, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
+            this.ForumsService.forumAddAsync(this.state.parentId, this.state.title, this.state.description, this.state.keywords, this.state.countryCode, '', this.state.city, this.state.latitude, this.state.longitude, this.state.timeZone)
 
                 .then((res) => {
 
