@@ -44,7 +44,7 @@ export default class ViewForum extends React.Component {
         this.ForumsService = new ForumsService(props.dispatch);
 
         this.state = {
-            forum: new Forum({}),
+            forum: new Forum(props.forum||{}),
             forumNotFound: false,
         };
 

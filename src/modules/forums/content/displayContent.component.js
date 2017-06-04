@@ -12,7 +12,8 @@ import { AuthService } from 'modules/services/REST/authentication/auth.service';
 import { ContentService } from 'modules/services/REST/forums/content/content.service';
 import {Hero, HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
 import {ForumsButtons} from 'modules/forums/components/forums-buttons.component';
-import {PreviewForum} from './../forums/view-forum/previewForum.component';
+
+import {PreviewContent} from './../components/previewContent.component';
 
 import {
     PanelContainer,
@@ -34,26 +35,85 @@ export class DisplayContent extends React.Component {
         this.AuthService = new AuthService(props.dispatch);
         this.ContentService = new ContentService(props.dispatch);
 
+        this.state = {
+
+            hasNext: true,
+            pageIndex: props.parent||props.params.pageIndex||1,
+            pageCount:8,
+
+            parent: props.parent||props.params.parent||'',
+            contentObjects : [],
+        }
+
     }
 
     componentDidMount(){
         this.fetchTopContent();
     }
 
+
     fetchTopContent(){
 
-        this.ContentService.fetchTopContent(this.props.params.parent || this.props.parent || '').then ((answer)=>{
+        this.ContentService.fetchTopContent(this.state.parent, this.state.pageIndex, this.state.pageCount).then ((answer)=>{
 
             console.log("FEEETCHING TOP CONTENT", answer);
 
+            if (answer.result === "true"){
+
+                this.fetchNewContent(answer.content);
+
+                this.setState({
+                    hasNext: answer.hasNext,
+                    pageIndex: answer.newPageIndex,
+                })
+
+            }
+
         });
 
+    }
+
+    fetchNewContent(content){
+
+        let newContentObjects = this.state.contentObjects;
+
+        if (content.constructor !== Array) content = [content];
+
+        for (let i=0; i<content.length; i++ ){
+
+            let newObject = content[i].object;
+
+            let bFound=false;
+            for (let j=0; j<newContentObjects; j++)
+                if (newContentObjects[j].id === newObject.id) {
+                    bFound=true;
+                    break;
+                }
+
+            if (!bFound)
+                newContentObjects.push(newObject);
+        }
+
+        this.setState({
+            contentObjects: newContentObjects,
+        })
+
+    }
+
+    renderContent() {
+        const objects = this.state.contentObjects;
+        return (
+            objects.map((object) =>
+                <PreviewContent key={object.id} object={object}></PreviewContent>
+            )
+        );
     }
 
     render() {
 
         return (
             <PanelContainer controls={false} style={{marginBottom:0}}>
+
 
                 <Hero style={{position: 'relative', zIndex: 2}}>
                     <HeroHeader>
@@ -69,7 +129,7 @@ export class DisplayContent extends React.Component {
                         Rubix 4.0 allows you to create static sites using a feature called <strong>distributables</strong>. These distributables can be deployed directly to any static server (e.g. Apache2 / Nginx etc).
                     </p>
 
-                    <PreviewForum/>
+                    {::this.renderContent()}
 
                 </Hero>
 

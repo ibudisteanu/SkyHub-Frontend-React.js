@@ -50,12 +50,12 @@ export class ForumsService {
 
     }
 
-    getForumAsync(sURL){
+    getForumAsync(sId){
 
         return new Promise( (resolve)=> {
 
             //Using Promise
-            this.SocketService.sendRequestGetDataPromise("forums/get-forum",{URL: sURL})
+            this.SocketService.sendRequestGetDataPromise("forums/get-forum",{id: sId})
 
                 .then( (resData ) => {
 

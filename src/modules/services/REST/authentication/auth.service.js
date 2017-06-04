@@ -91,7 +91,7 @@ export class AuthService {
         return new Promise( (resolve)=> {
             //Using Promise
 
-            this.SocketService.createClientSocket();
+            //this.SocketService.createClientSocket();
             this.SocketService.sendRequestGetDataPromise("auth/login-token",{token: token}).then( (resData ) => {
 
                 console.log('Answer from Login Token Async');

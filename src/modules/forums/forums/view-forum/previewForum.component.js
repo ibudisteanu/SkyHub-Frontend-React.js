@@ -45,16 +45,26 @@ export class PreviewForum extends React.Component {
     }
 
     componentDidMount (){
-        var forumURL = this.props.forumURL || '';
 
-        this.ForumsService.getForumAsync(forumURL).then ( (forumAnswer) => {
-
+        if (typeof this.props.forum !== "undefined"){
             this.setState({
-                forum: forumAnswer,
-                forumNotFound : (forumAnswer !== null),
-            })
+                forum: new Forum(this.props.forum)
+            });
+            return;
+        }
 
-        });
+        if (typeof this.props.id !== "undefined"){
+            let forumId = this.props.id || '';
+
+            this.ForumsService.getForumAsync(forumId).then ( (forumAnswer) => {
+
+                this.setState({
+                    forum: forumAnswer,
+                    forumNotFound : (forumAnswer !== null),
+                })
+
+            });
+        }
 
     }
 
@@ -76,7 +86,7 @@ export class PreviewForum extends React.Component {
                 { ((this.state.forum !== null) && (this.state.forumNotFound === false))
                     ?
                     <Panel>
-                        <PanelHeader style={{backgroundColor: this.state.forum.coverColor||"#79B0EC", height: 120}}>
+                        <PanelHeader className="forum-preview-cover" style={{backgroundImage: 'url('+this.state.forum.coverPic+')', backgroundColor: this.state.forum.coverColor||"#79B0EC"}}>
                             <Grid>
                                 <Row>
                                     <Col xs={12} className='fg-white'>

@@ -23,7 +23,7 @@ export class SocketService {
 
         if (!socketServiceInstance){
 
-            console.log('Socket Client constructor instance...');
+            console.log('%%%%% WARNING Socket Client constructor INSTANCE...');
 
             this.dispatch = dispatch;
             socketServiceInstance = this;
@@ -48,7 +48,8 @@ export class SocketService {
 
         if ((typeof window === "undefined") || (typeof window.document === "undefined")) return; //in case it is not executed on the Client Browser
 
-        console.log('Client Socket Constructor');
+        console.log('createClientSocket ');
+        clearInterval(this.createClientSocketInterval);
 
         this.socket = io.connect(this.sServerSocketAddress, {
             query: "token=" + CookiesService.getTokenCookie() //JWT Token
@@ -105,8 +106,6 @@ export class SocketService {
             console.log('The client has disconnected!');
             this.dispatch(SocketStatusActions.socketDisconnected());
         });
-
-        clearInterval(this.createClientSocketInterval);
     }
 
     /*
@@ -134,7 +133,7 @@ export class SocketService {
 
             this.sendRequest(sRequestName, sRequestData);
 
-            this.socket.on(this.sServerSocketApi + sRequestName, function (resData) {
+            this.socket.once(this.sServerSocketApi + sRequestName, function (resData) {
 
                 /*console.log('SOCKET RECEIVED: ');
                  console.log(resData);*/
@@ -172,7 +171,7 @@ export class SocketService {
                 });
             });
 
-        console.log("OBSERVABLE",observable);
+        console.log("OBSERVABLE for "+sRequestName,observable,);
         return observable;
     }
 
