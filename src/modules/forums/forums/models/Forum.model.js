@@ -5,6 +5,7 @@
 export class Forum {
 
     title;
+    URL;
     description;
     authorId;
 
@@ -29,6 +30,8 @@ export class Forum {
 
         this.title = data.title || '';
         this.description = data.description || '';
+
+        this.URL = data.URL || '';
 
         this.iconPic = data.iconPic || '';
         this.coverPic  = data.coverPic || '';

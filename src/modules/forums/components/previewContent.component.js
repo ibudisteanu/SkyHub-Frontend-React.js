@@ -16,7 +16,7 @@ import { AuthService } from 'modules/services/REST/authentication/auth.service';
 import { ContentService } from 'modules/services/REST/forums/content/content.service';
 
 import {Forum} from '../forums/models/Forum.model.js';
-import {PreviewForum} from './../forums/view-forum/previewForum.component';
+import {PreviewForum} from '../forums/view-forum/PreviewForum.component';
 
 @withRouter
 @connect(

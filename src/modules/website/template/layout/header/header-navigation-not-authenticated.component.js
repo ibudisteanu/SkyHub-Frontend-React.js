@@ -6,7 +6,7 @@
 import React from 'react';
 
 import {AuthenticationModal} from "modules/users/authentication/modals/authentication.modal";
-import * as UserAuthenticatedActions from 'redux/website/actions/userAuthenticated-actions.js';
+import * as UserAuthenticatedActions from 'redux/website/actions/UserAuthenticated.actions.js';
 
 
 import {connect} from "react-redux";

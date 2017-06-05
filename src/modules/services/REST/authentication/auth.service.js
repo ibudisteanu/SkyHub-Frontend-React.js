@@ -9,7 +9,7 @@ import {SocketService} from 'modules/services/REST/socket/socket.service';
 import {User} from 'modules/users/models/User.model';
 
 
-import * as UserAuthenticatedActions from 'redux/website/actions/userAuthenticated-actions.js';
+import * as UserAuthenticatedActions from 'redux/website/actions/UserAuthenticated.actions.js';
 
 let authServiceInstance = null;
 

@@ -3,7 +3,7 @@
  */
 
 import {SocketService} from 'modules/services/REST/socket/socket.service';
-import * as UserAuthenticatedActions from 'redux/website/actions/userAuthenticated-actions.js';
+import * as UserAuthenticatedActions from 'redux/website/actions/UserAuthenticated.actions.js';
 
 let contentServiceInstance = null;
 

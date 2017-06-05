@@ -9,7 +9,7 @@ import { Link, withRouter } from 'react-router';
 
 import l20n, { Entity } from '@sketchpixy/rubix/lib/L20n';
 
-import * as SocketStatusActions from 'redux/website/actions/socketStatus-actions';
+import * as SocketStatusActions from 'redux/website/actions/SocketStatus.actions.js';
 
 import {
     Navbar,

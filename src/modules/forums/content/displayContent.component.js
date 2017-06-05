@@ -116,6 +116,7 @@ export class DisplayContent extends React.Component {
 
 
                 <Hero style={{position: 'relative', zIndex: 2}}>
+
                     <HeroHeader>
                         <span>What's hot on SkyHub</span>
                     </HeroHeader>

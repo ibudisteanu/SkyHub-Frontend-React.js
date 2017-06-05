@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import {HeaderCover} from './headerCover.component';
+import {HeaderCover} from './HeaderCover.component';
 
 import {
     Row,

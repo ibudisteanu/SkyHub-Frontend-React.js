@@ -72,6 +72,7 @@ export class HeaderCover extends React.Component {
                             <Image src={this.props.icon||'http://skyhub.me/theme/images/SkyHub-logo.png'} />
                             <row>
                                 <h1 className='fg-white'>{this.props.title}</h1>
+                                <br/>
                                 <h4 className='fg-white' style={{opacity: 0.8}}>{this.props.subTitle}</h4>
                             </row>
 

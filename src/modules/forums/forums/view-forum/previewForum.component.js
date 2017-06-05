@@ -6,7 +6,9 @@ import React from 'react';
 import {connect} from "react-redux";
 import { Link, withRouter } from 'react-router';
 
+import {newRouterForumArgumentAction} from 'redux/website/actions/RouterState.actions';
 import {getPath} from 'common/common-functions';
+
 import { AuthService } from 'modules/services/REST/authentication/auth.service.js';
 import {ForumsService} from 'modules/services/REST/forums/forums/forums.service';
 
@@ -48,7 +50,8 @@ export class PreviewForum extends React.Component {
 
         if (typeof this.props.forum !== "undefined"){
             this.setState({
-                forum: new Forum(this.props.forum)
+                forum: new Forum(this.props.forum),
+                forumNotFound: this.props.forum === null,
             });
             return;
         }
@@ -77,15 +80,21 @@ export class PreviewForum extends React.Component {
         )
     }
 
+    setForumArgument(){
+        this.props.dispatch(newRouterForumArgumentAction(this.state.forum));
+    }
+
     render() {
 
 
         return (
             <PanelContainer controls={false} style={{marginBottom:0}}>
 
+                <Link to={getPath( this,'forum/'+this.state.forum.URL )} onClick = {::this.setForumArgument}> >
+
                 { ((this.state.forum !== null) && (this.state.forumNotFound === false))
                     ?
-                    <Panel>
+                    <Panel >
                         <PanelHeader className="forum-preview-cover" style={{backgroundImage: 'url('+this.state.forum.coverPic+')', backgroundColor: this.state.forum.coverColor||"#79B0EC"}}>
                             <Grid>
                                 <Row>
@@ -115,6 +124,7 @@ export class PreviewForum extends React.Component {
 
                 }
 
+                </Link>
 
 
             </PanelContainer>
