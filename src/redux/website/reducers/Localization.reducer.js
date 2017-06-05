@@ -14,7 +14,7 @@ export const defaultLocalization = {
 };
 
 
-export function localizationReducer  ( state = defaultLocalization, action)  {
+export function LocalizationReducer  ( state = defaultLocalization, action)  {
 
     let newState = state;
 

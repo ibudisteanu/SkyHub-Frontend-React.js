@@ -4,21 +4,26 @@
 
 import {combineReducers, createStore,  applyMiddleware} from "redux";
 
-import {userReducer, defaultUserState} from './reducers/userAuthenticated-reducer';
-import {socketStatusReducer, defaultSocketStatus} from './reducers/socketStatus-reducer';
-import {localizationReducer, defaultLocalization} from './reducers/localization-reducer';
+import {UserReducer, defaultUserState} from './reducers/UserAuthenticated.reducer';
+import {SocketStatusReducer, defaultSocketStatus} from './reducers/SocketStatus.reducer';
+import {LocalizationReducer, defaultLocalization} from './reducers/Localization.reducer';
+import {RouterStatusReducer, defaultRouterState} from './reducers/RouterState.reducer';
 
 const reducers = combineReducers ({
-    userAuthenticated : userReducer,
-    socketStatus : socketStatusReducer,
-    localization : localizationReducer,
+    userAuthenticated : UserReducer,
+    socketStatus : SocketStatusReducer,
+    localization : LocalizationReducer,
+
+    routerState : RouterStatusReducer,
 });
 
 var websiteStore = createStore(reducers, {
 
-    userAuthenticated: defaultUserState,
-    socketStatus : defaultSocketStatus,
-    localization :  defaultLocalization,
+    userAuthenticated: defaultUserState, //Current User Authenticated
+    socketStatus : defaultSocketStatus, //Socket Status
+    localization :  defaultLocalization, //Location
+
+    routerState : defaultRouterState, //Router Arguments
 
 });
 
@@ -28,5 +33,6 @@ exports.websiteStore = websiteStore;
 /*
     Calling an action:
 
-        WebsiteStore.diaspath({type: "NEW_USER_AUTHENTICATED", status: {} });
+        WebsiteStore.dispatch(UserAuthenticatedActions.newUserAuthenticated(userLogged));
+        WebsiteStore.dispatch({type: "NEW_USER_AUTHENTICATED", status: {} });
  */

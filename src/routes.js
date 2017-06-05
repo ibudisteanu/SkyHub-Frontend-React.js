@@ -26,7 +26,7 @@ import Footer from './common/footer';
 
 import Homepage2 from './modules/website/pages/Homepage2';
 import Homepage from './modules/website/pages/Homepage';
-import ViewForum from './modules/forums/forums/view-forum/viewForum.component';
+import ViewForum from './modules/forums/forums/view-forum/ViewForum.component';
 
 import Dashboard from './routes/Dashboard';
 

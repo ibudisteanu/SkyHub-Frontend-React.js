@@ -5,7 +5,7 @@ export const defaultUserState = {
     error : '',
 };
 
-export function userReducer  ( state = defaultUserState, action)  {
+export function UserReducer  ( state = defaultUserState, action)  {
 
     let newState = state;
 

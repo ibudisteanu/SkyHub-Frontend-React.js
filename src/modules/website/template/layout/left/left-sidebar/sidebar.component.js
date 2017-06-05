@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
 
-import {getDefaultLocalization} from 'redux/website/actions/localization-actions';
+import {getDefaultLocalization} from 'redux/website/actions/Localization.actions.js';
 
 import {SidebarContainer} from './sidebar-container.component';
 

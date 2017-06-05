@@ -6,7 +6,7 @@ export const defaultSocketStatus = {
     showOnlineStatus : false,
 };
 
-export function socketStatusReducer  ( state = defaultSocketStatus, action)  {
+export function SocketStatusReducer  ( state = defaultSocketStatus, action)  {
 
     let newState = state;
 
