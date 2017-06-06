@@ -11,7 +11,7 @@ import jsonp  from 'jsonp';
 
 import axios from 'axios';
 
-export class KeywordsMultiselect extends React.Component {
+export class AutocompleteSelect extends React.Component {
 
     displayName: 'GithubUsers'
 
@@ -21,7 +21,6 @@ export class KeywordsMultiselect extends React.Component {
 
         this.state = {
             backspaceRemoves : false,
-            multi : true,
             creatable : true,
 
             value: props.value||'',
@@ -100,7 +99,7 @@ export class KeywordsMultiselect extends React.Component {
 
                 {(this.props.label||'') !== '' ? (<h3 className="section-heading">{this.props.label}</h3>) : '' }
 
-                <AsyncSelectComponent multi={this.state.multi} value={this.state.value} onChange={::this.onChange} valueKey="value" labelKey="label" loadOptions={::this.getSuggestions} backspaceRemoves={this.state.backspaceRemoves} />
+                <AsyncSelectComponent multi={this.props.multi||false} value={this.state.value} onChange={::this.onChange} valueKey="value" labelKey="label" loadOptions={::this.getSuggestions} backspaceRemoves={this.state.backspaceRemoves} />
 
             </div>
         );

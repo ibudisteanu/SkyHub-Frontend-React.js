@@ -15,7 +15,7 @@ import {Hero, HeroHeader, HeroHeader2 } from 'modules/website/template/component
 import {HeaderCover} from 'modules/website/template/layout/header/components/cover/HeaderCover.component';
 import {WebsiteHeaderCover} from 'modules/website/template/layout/header/components/cover/WebsiteHeaderCover.component';
 
-import {DisplayContent} from 'modules/forums/content/displayContent.component';
+import {DisplayContent} from 'modules/forums/content/DisplayContent.component';
 
 import {newRouterForumArgumentAction} from 'redux/website/actions/RouterState.actions';
 
@@ -45,17 +45,10 @@ export default class ViewForum extends React.Component {
         this.AuthService = new AuthService(props.dispatch);
         this.ForumsService = new ForumsService(props.dispatch);
 
-    }
+        this.state = ({
 
-    componentDidMount (){
-
-        //I have a forumURL to process
-
-        let forumURL = this.props.params.forumURL || '';
-
-        this.ForumsService.getForumAsync(forumURL).then ( (forumAnswer) => {
-
-            this.props.dispatch(newRouterForumArgumentAction(forumAnswer, (forumAnswer !== null) ));
+            forum : new Forum({}),
+            forumNotFound : false,
 
         });
 
@@ -66,7 +59,7 @@ export default class ViewForum extends React.Component {
         return (
             <div>
                 <HeroHeader>
-                    <span>{this.props.routerState.forum.forum.title}</span>
+                    <span>{this.state.forum.title}</span>
                 </HeroHeader>
 
             </div>

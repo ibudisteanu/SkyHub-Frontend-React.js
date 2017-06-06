@@ -27,17 +27,19 @@ export class ContentService {
 
     async fetchTopContent(parent, pageIndex, pageCount){
 
-        return new Promise( (resolve)=> {
+        //Using Promise
 
-            //Using Promise
-            this.SocketService.sendRequestGetDataPromise("content/get-top-content",{parent: parent, pageIndex:pageIndex, pageCount: pageCount})
+        return this.SocketService.sendRequestGetDataPromise("content/get-top-content",{parent: parent, pageIndex:pageIndex, pageCount: pageCount});
 
-                .then( (resData ) => {
+    }
 
-                    resolve(resData);
-                });
+    async fetchContent(id){
+        return this.SocketService.sendRequestGetDataPromise("content/get-content",{id: id});
+    }
 
-        });
+    async fetchContentHTTP(parent, pageIndex, pageCount){
+
+        return this.SocketService.sendRequestGetDataPromise("content/get-content",{parent: parent, pageIndex:pageIndex, pageCount: pageCount});
 
     }
 

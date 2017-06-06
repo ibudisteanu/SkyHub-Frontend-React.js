@@ -52,19 +52,8 @@ export class ForumsService {
 
     getForumAsync(sId){
 
-        return new Promise( (resolve)=> {
-
             //Using Promise
-            this.SocketService.sendRequestGetDataPromise("forums/get-forum",{id: sId})
-
-                .then( (resData ) => {
-
-                    console.log('Answer from FORUM ', resData);
-
-                    resolve(resData);
-                });
-
-        });
+        return this.SocketService.sendRequestGetDataPromise("forums/get-forum",{id: sId});
 
     }
 

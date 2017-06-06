@@ -198,14 +198,17 @@ const basicRoutes = (
   <Route component={AppFullWidth}>
 
     <Route path='/' component={Homepage} />
-    <Route path='homepage2' component={Homepage2} />
+    <Route path=':URL' component={Homepage} />
 
-    <Route path="forum/:forumURL" component={ViewForum}/>
+    <Route path='homepage2' component={Homepage2} />
+    <Route path='homepage1' component={Homepage} />
 
     <Route path='lock' component={Lock} />
     <Route path='login' component={LoginPage} />
     <Route path='registration' component={RegistrationPage} />
     <Route path='register' component={RegistrationPage} />
+
+
   </Route>
 );
 

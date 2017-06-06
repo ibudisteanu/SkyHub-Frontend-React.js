@@ -11,7 +11,7 @@ import {getPath} from 'common/common-functions';
 import { AuthService } from 'modules/services/REST/authentication/auth.service';
 import {Hero,HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
 
-import {AddForumForm} from 'modules/forums/forums/components/addForum.form.component'
+import {AddForumForm} from 'modules/forums/forums/components/AddForum.form.component'
 
 import {
     ButtonToolbar,
