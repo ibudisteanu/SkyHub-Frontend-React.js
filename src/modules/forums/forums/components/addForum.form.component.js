@@ -12,7 +12,7 @@ import axios from 'axios';
 
 import {getPath} from 'common/common-functions';
 import { ForumsService } from 'modules/services/REST/forums/forums/forums.service';
-import {KeywordsMultiselect} from 'modules/components/keywords.multiselect.component';
+import {AutocompleteSelect} from 'modules/components/Autocomplete.select.component';
 import {AuthenticationModal} from "modules/users/authentication/modals/authentication.modal";
 
 import Select from 'react-select';
@@ -263,7 +263,8 @@ export class AddForumForm extends React.Component {
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-pen' />
                                             </InputGroup.Addon>
-                                            <FormControl autoFocus type='text' className='border-focus-blue' placeholder='title' value={this.state.title} onChange={::this.handleTitleChange} />
+                                            <AutocompleteSelect multi={false} controlId="titeSelect" className='border-focus-blue'  placeholder='title'  value={this.state.title}  onSelect={::this.handleTitleChange}  />
+
                                             <FormControl.Feedback />
                                         </InputGroup>
                                         <HelpBlock>{this.state.titleValidationStatus[1]}</HelpBlock>
@@ -278,7 +279,7 @@ export class AddForumForm extends React.Component {
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-edit' />
                                             </InputGroup.Addon>
-                                            <FormControl type='text'  componentClass='textarea' rows='3' className='border-focus-blue' placeholder='description' value={this.state.description} onChange={::this.handleDescriptionChange} />
+                                            <FormControl type='text'  componentClass='textarea' rows='3' className='border-focus-blue' placeholder='description' value={this.state.description} onChange={::this.handleDescriptionChange} style={{zIndex:0}} />
                                             <FormControl.Feedback />
                                         </InputGroup>
                                         <HelpBlock>{this.state.descriptionValidationStatus[1]}</HelpBlock>
@@ -293,7 +294,7 @@ export class AddForumForm extends React.Component {
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-tag-empty' />
                                             </InputGroup.Addon>
-                                            <KeywordsMultiselect controlId="keywordsSelect" value={this.state.keywords}  onSelect={::this.handleKeywordsSelect} />
+                                            <AutocompleteSelect controlId="keywordsSelect" value={this.state.keywords} multi={true}   onSelect={::this.handleKeywordsSelect} style={{zIndex:0}} />
                                             <FormControl.Feedback />
                                         </InputGroup>
                                         <HelpBlock>{this.state.keywordsValidationStatus[1]}</HelpBlock>
@@ -310,7 +311,7 @@ export class AddForumForm extends React.Component {
                                                     <Icon glyph='icon-fontello-flag-1' />
                                                 </InputGroup.Addon>
 
-                                                <CountrySelect controlId="countrySelect" multi={false} flagImagePath="/../../imgs/app/flags/flags/flat/flagicons/"  value={this.state.countryCode}  onSelect={this.handleCountrySelect} />
+                                                <CountrySelect controlId="countrySelect" multi={false} flagImagePath="/../../imgs/app/flags/flags/flat/flagicons/"  value={this.state.countryCode}  onSelect={this.handleCountrySelect} style={{zIndex:0}} />
                                                 <FormControl.Feedback />
                                             </InputGroup>
                                             <HelpBlock>{this.state.countryValidationStatus[1]}</HelpBlock>
@@ -323,7 +324,7 @@ export class AddForumForm extends React.Component {
                                                 <InputGroup.Addon>
                                                     <Icon glyph='icon-fontello-home-1' />
                                                 </InputGroup.Addon>
-                                                <FormControl type='city' className='border-focus-blue' placeholder='city'  value={this.state.city} onChange={::this.handleCityChange} />
+                                                <FormControl type='city' className='border-focus-blue' placeholder='city'  value={this.state.city} onChange={::this.handleCityChange} style={{zIndex:0}} />
                                                 <FormControl.Feedback />
                                             </InputGroup>
                                             <HelpBlock>{this.state.cityValidationStatus[1]}</HelpBlock>

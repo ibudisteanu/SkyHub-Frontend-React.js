@@ -11,9 +11,9 @@ import {getPath} from 'common/common-functions';
 import { AuthService } from 'modules/services/REST/authentication/auth.service';
 import { ContentService } from 'modules/services/REST/forums/content/content.service';
 import {Hero, HeroHeader, HeroHeader2 } from 'modules/website/template/components/hero.component';
-import {ForumsButtons} from 'modules/forums/components/forums-buttons.component';
+import {ForumsButtons} from 'modules/forums/components/ForumsButtons.component';
 
-import {PreviewContent} from './../components/previewContent.component';
+import {PreviewContent} from '../components/PreviewContent.component';
 
 import {
     PanelContainer,

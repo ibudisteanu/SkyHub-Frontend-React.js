@@ -2,10 +2,6 @@
  * Created by Alexandru Ionut Budisteanu - SkyHub on 6/4/2017.
  * (C) BIT TECHNOLOGIES
  */
-/**
- * Created by Alexandru Ionut Budisteanu - SkyHub on 5/24/2017.
- * (C) BIT TECHNOLOGIES
- */
 
 import React from 'react';
 import {connect} from "react-redux";
@@ -44,14 +40,17 @@ export class PreviewContent extends React.Component {
 
     render() {
         
-        var extractedIdData = this.ContentService.extractDataFromIds(this.props.object.id);
+        let extractedIdData = this.ContentService.extractDataFromIds(this.props.object.id);
+        let objectType = extractedIdData.objectType || '';
 
-        return (
-            <div>
+        switch (objectType){
+            case 'frm':
+                return this.renderForum();
+            case 'us':
+                return this.renderForum();
+            case 'top':
+                return this.renderForum();
+        }
 
-                { (extractedIdData.objectType||'') === 'frm' ? ::this.renderForum() : '' }
-
-            </div>
-        );
     }
 }
