@@ -19,6 +19,7 @@ import {
 @withRouter
 @connect(state => ({
     userAuthenticated : state.userAuthenticated,
+    routerState : state.routerState,
 }))
 export default class Homepage extends React.Component {
 
@@ -28,35 +29,39 @@ export default class Homepage extends React.Component {
 
         this.state=({
             contentObject : null,
-            notFound: false,
+            contentObjectNotFound: false,
         });
 
     }
 
-    componentDidMount(){
+    componentWillMount(){
         let sContentToSearchId = '';
 
-        let sURL = this.props.params.URL || ''
+        let sURL = this.props.params.URL || '';
 
-        if (sURL !== '') sContentToSearchId = sURL;
+        if (sURL !== '') {
+            sURL = sURL.replace('ltr/','');
+            sContentToSearchId = sURL;
+        }
 
         if (sContentToSearchId !== '')
-            HTTPService.getRequest("content/get-content",{id: sContentToSearchId}).then ( (answer)=>{
+            HTTPService.postRequest("content/get-content", {id: sContentToSearchId} ).then ( (answer)=>{
 
-                console.log("GET CONTENT ANSWER FROM SERVER: ",answer);
+                console.log("");console.log("");console.log("");console.log("");
+                console.log("GET CONTENT ANSWER FROM SERVER: ",sContentToSearchId," answer ",answer);
 
                 if (answer.data.result === true){
 
-                    this.setState({
+                    this.state = ({
                         contentObject: answer.data.content,
-                        notFound: false,
+                        contentObjectNotFound: false,
                     })
 
                 } else
                 if (answer.data.result === false){
-                    this.setState({
+                    this.state = ({
                         contentObject: null,
-                        notFound: true,
+                        contentObjectNotFound: true,
                     })
                 }
 
@@ -80,26 +85,39 @@ export default class Homepage extends React.Component {
     renderSimpleWebsite(){
         return (
 
-                this.props.userAuthenticated.user.isLoggedIn()
+            <div>
+                {
+                    this.props.userAuthenticated.user.isLoggedIn()
                 ?
                     <AuthenticatedHomeComponent/>
 
                 :
 
-                 <HomeComponent/>
+                    <HomeComponent/>
+                }
+
+                <DisplayContent/>
+            </div>
 
         )
+    }
+
+    renderHomepageComponent(){
+        return (
+            <HomepageContent object={this.state.contentObject} objectNotFound={this.state.contentObjectNotFound} />
+        )
+
     }
 
     render() {
         return (
             <div>
 
-                {this.state.contentObject === null ? ::this.renderSimpleWebsite() : <HomepageContent object={this.state.contentObject} />}
+                {this.state.contentObject === null ? ::this.renderSimpleWebsite() : ::this.renderHomepageComponent()}
 
                 {this.state.notFound ? ::this.renderError() : this.state.notFound+'KAKAT'}
 
-                <DisplayContent/>
+
 
             </div>
         );

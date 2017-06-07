@@ -67,4 +67,23 @@ export class ContentService {
             return null
     }
 
+    extractObjectType(object){
+
+        let extractedIdData = this.extractDataFromIds(object);
+
+        switch (extractedIdData.objectType || ''){
+            case 'frm':
+                return 'forum';
+
+            case 'us':
+                return 'user';
+
+            case 'top':
+                return 'topic';
+
+        }
+
+        return 'none'
+    }
+
 }

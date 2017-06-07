@@ -10,10 +10,10 @@ import { Link, withRouter } from 'react-router';
 
 import {getPath} from 'common/common-functions';
 import { AuthService } from 'modules/services/REST/authentication/auth.service';
-import { ContentService } from 'modules/services/REST/forums/content/content.service';
+
 
 import {Forum} from '../../forums/forums/models/Forum.model.js';
-import {PreviewForum} from '../../forums/forums/view-forum/PreviewForum.component';
+import {ViewForum} from '../../forums/forums/view-forum/ViewForum.component';
 
 @withRouter
 @connect(
@@ -48,8 +48,10 @@ export class HomepageContent extends React.Component {
     renderForum(){
         let forum = new Forum(this.props.object);
 
+        //console.log("%%%%%%%%%%%RENDER FORUM ",this.props.object);
+
         return (
-            <PreviewForum key={forum.id} forum = {forum} />
+            <ViewForum key={forum.id} forum={forum} forumNotFound={this.props.objectNotFound} />
         )
     }
 

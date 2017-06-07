@@ -178,11 +178,15 @@ export class AddForumForm extends React.Component {
         //     });
     }
 
-    handleTitleChange(e){
+    handleTitleChangeSelect(value){
         this.setState({
-            title : e.target.value,
+            title : value,
             titleValidationStatus  : [null, '']
         });
+    }
+
+    handleTitleChange(e){
+        this.handleTitleChangeSelect(e.target.value);
     }
 
     handleDescriptionChange(e){
@@ -237,7 +241,7 @@ export class AddForumForm extends React.Component {
                 { !this.props.userAuthenticated.user.isLoggedIn() ? (<AuthenticationModal ref={(c) => this.authenticationModal = c} onSuccess={::this.authenticationSuccessfully} />) : '' }
 
 
-                <Panel>
+                <Panel style={{backgroundColor:"#f9f8f8"}}>
 
                     <PanelHeader className='bg-green' style={{textAlign: "center"}}>
                         <Grid>
@@ -249,9 +253,9 @@ export class AddForumForm extends React.Component {
                         </Grid>
                     </PanelHeader>
 
-                    <PanelBody style={{padding: 0}}>
+                    <PanelBody style={{padding: 10, paddingLeft:40, paddingRight:40}}>
 
-                        <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
+                        <div>
 
 
                             <Form onSubmit={::this.handleAddForum}>
@@ -263,7 +267,9 @@ export class AddForumForm extends React.Component {
                                             <InputGroup.Addon>
                                                 <Icon glyph='icon-fontello-pen' />
                                             </InputGroup.Addon>
-                                            <AutocompleteSelect multi={false} controlId="titeSelect" className='border-focus-blue'  placeholder='title'  value={this.state.title}  onSelect={::this.handleTitleChange}  />
+
+                                            <FormControl type='text' className='border-focus-blue' placeholder='title' value={this.state.title} onChange={::this.handleTitleChange} style={{zIndex:0}} />
+                                            {/*<AutocompleteSelect multi={false} controlId="titeSelect" className='border-focus-blue'  placeholder='title'  value={this.state.title}  onSelect={::this.handleTitleChangeSelect} style={{zIndex:0}}  /> */}
 
                                             <FormControl.Feedback />
                                         </InputGroup>

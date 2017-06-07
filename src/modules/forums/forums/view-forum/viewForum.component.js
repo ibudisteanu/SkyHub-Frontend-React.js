@@ -17,7 +17,7 @@ import {WebsiteHeaderCover} from 'modules/website/template/layout/header/compone
 
 import {DisplayContent} from 'modules/forums/content/DisplayContent.component';
 
-import {newRouterForumArgumentAction} from 'redux/website/actions/RouterState.actions';
+import {Forum} from 'modules/forums/forums/models/Forum.model';
 
 import {
     PanelContainer,
@@ -33,11 +33,10 @@ import {
 @connect(
     state => ({
         userAuthenticated : state.userAuthenticated,
-        routerState : state.routerState,
     }),
     dispatch => ({dispatch}),
 )
-export default class ViewForum extends React.Component {
+export class ViewForum extends React.Component {
 
     constructor(props){
         super(props);
@@ -59,7 +58,7 @@ export default class ViewForum extends React.Component {
         return (
             <div>
                 <HeroHeader>
-                    <span>{this.state.forum.title}</span>
+                    <span>{this.props.forum.title}</span>
                 </HeroHeader>
 
             </div>
@@ -78,18 +77,18 @@ export default class ViewForum extends React.Component {
 
     render() {
 
-        console.log("%%%%%% PARAMS",this);
+        console.log("%%%%%%%%%%% VIEW FORUM " , this.props.forum);
 
         return (
             <div>
 
-                { ((this.props.routerState.forum.forum !== null) && (this.props.routerState.forum.forumNotFound === false))
+                { ((this.props.forum !== null) && (this.props.forumNotFound === false))
                     ?
-                    <HeaderCover title={this.props.routerState.forum.forum.title||""}
-                                 subTitle={this.props.routerState.forum.forum.description||""}
-                                 icon={this.props.routerState.forum.forum.iconPic||""}
-                                 cover={this.props.routerState.forum.forum.coverPic||''}
-                                 backgroundColor={this.props.routerState.forum.forum.coverColor||''} />
+                    <HeaderCover title={this.props.forum.title||""}
+                                 subTitle={this.props.forum.description||""}
+                                 icon={this.props.forum.iconPic||""}
+                                 cover={this.props.forum.coverPic||''}
+                                 backgroundColor={this.props.forum.coverColor||''} />
 
                     :
 
@@ -99,11 +98,12 @@ export default class ViewForum extends React.Component {
 
                 <Hero style={{position: 'relative', zIndex: 2}}>
 
-                    {this.props.routerState.forum.forum !== null ? ::this.renderForum(this.props.routerState.forum.forum) : ::this.renderError}
+                    {this.props.forum !== null ? ::this.renderForum(this.props.forum) : ::this.renderError}
 
                 </Hero>
 
                 <DisplayContent/>
+
 
             </div>
         )

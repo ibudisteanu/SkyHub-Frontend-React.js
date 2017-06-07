@@ -33,12 +33,22 @@ export class AutocompleteSelect extends React.Component {
             value: value,
         });
 
-        var onSelect = this.props.onSelect||function(){};
+        let answer;
+        if ((this.props.multi||false)===true){//multiple keywords
 
-        var answer = [];
-        value.forEach (function(element){
-            answer.push(element.value)
-        });
+            if (!Array.isArray(value)) value = [value];
+
+            answer = [];
+            value.forEach (function(element){
+                answer.push(element.value)
+            });
+
+        } else//just value
+            answer = value;
+
+        console.log("AUTOCOMPLETE:: ",answer);
+
+        let onSelect = this.props.onSelect||function(){};
         onSelect(answer);
     }
 

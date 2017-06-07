@@ -23,6 +23,8 @@ class HTTPServiceClass {
     }
 
     getRequest(sRequest, post){
+
+        //console.log(""); console.log(""); console.log(""); console.log(post);
         return axios.get(this.addTrailingSlash(this.serverHTTPApi)+sRequest, post);
     }
 

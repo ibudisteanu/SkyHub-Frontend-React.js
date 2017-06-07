@@ -90,7 +90,7 @@ export class PreviewForum extends React.Component {
         return (
             <PanelContainer controls={false} style={{marginBottom:0}}>
 
-                <Link to={getPath( this,'forum/'+this.state.forum.URL )} onClick = {::this.setForumArgument}> >
+                <Link to={getPath( this, this.state.forum.URL )} onClick = {::this.setForumArgument}> >
 
                 { ((this.state.forum !== null) && (this.state.forumNotFound === false))
                     ?

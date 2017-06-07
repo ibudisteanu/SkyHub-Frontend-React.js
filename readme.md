@@ -37,10 +37,35 @@ It will start on port 8080, and you can access the frontend server by http://127
 
 The "src" folder must be set as Resource Root. To do this Settings->Directories where you Set Directories "src" folder as "Resource Root"
 
+
+# TO DOs
+
 ##### Working components
 
 1. Login
 2. Register
-3. Facebook & Google integration, but I need to write the server processing code
-4. Header Navigation Menu
-5. Server Status Head Bar
+    2.1. Facebook & Google integration, but I need to write the server processing code
+3. REST
+    3.1 Socket.io
+        3.2 Cookie Authentication JWT (using tokens)
+    3.2 HTTP requests   
+5. Header Navigation Menu
+6. Server Status Head Bar
+7. Forums
+    7.1 Preview Forum
+    7.2 View Forum
+    
+
+## To DOs
+
+1. Topics
+    Add Topics
+    Edit Topics
+    Delete Topics
+2. Replies
+    Add Replies
+    Edit Replies
+    Delete Replies
+3. Voting
+    Add Voting (Up and Downs)
+    Unvote   

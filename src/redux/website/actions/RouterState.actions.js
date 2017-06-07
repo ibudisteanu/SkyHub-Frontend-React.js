@@ -3,14 +3,22 @@
  * (C) BIT TECHNOLOGIES
  */
 
-export function newRouterForumArgumentAction(newRouterForum, forumNotFound ) {
+import { ContentService } from 'modules/services/REST/forums/content/content.service';
+
+export function newRouterForumArgumentAction(newRouterObject, objectNotFound ) {
+
     return {
-        type: "NEW_ROUTER_FORUM_ARGUMENT",
+        type: "NEW_ROUTER_OBJECT_ARGUMENT",
         status: {
-            forum : {
-                forum: newRouterForum,
-                forumNotFound : forumNotFound || (newRouterForum === null)
+
+            object : {
+                type: ContentService.extractObjectType(newRouterObject),
+                object: newRouterObject,
+                notFound : objectNotFound || (newRouterForum === null)
+
             },
+
+
         }
     }
 }
